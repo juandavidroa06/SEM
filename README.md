@@ -12,7 +12,8 @@ Proyecto de trabajo en R para el Taller 1 de Modelacion de Ecuaciones Estructura
 
 ## Contenido
 
-- `datos_crudos/`: archivos ZIP originales de los modulos descargados.
+- `datos_crudos/`: carpeta local para los ZIP originales descargados del DANE;
+  por sus condiciones de uso, los microdatos no se versionan en este repositorio.
 - `documentacion/`: cuestionario, manual técnico y diccionario oficial en ZIP.
 - `00_inspeccion_base.R`: script inicial en R base que lee los CSV directamente
   desde los ZIP y genera un diagnostico de filas, variables e identificadores.
@@ -43,6 +44,17 @@ Proyecto de trabajo en R para el Taller 1 de Modelacion de Ecuaciones Estructura
   documentada la decisión provisional; el modelo aprobado permanece como
   referencia.
 - `salidas/`: resultados generados por los scripts.
+
+## Datos y entregables con microdatos
+
+Para reproducir los análisis, descarga los módulos de la ECP 2023 desde el
+[catálogo ANDA del DANE](https://microdatos.dane.gov.co/index.php/catalog/822)
+y coloca los ZIP en `datos_crudos/` con los nombres esperados por los scripts.
+No subas esos archivos al repositorio. El Excel de entrega y el ZIP final también
+se mantienen localmente porque incluyen filas de microdatos; están en
+`outputs/01a15760-d284-7790-91e9-a88837c249b8/` y `entregables/` en la carpeta
+de trabajo original. El reporte PDF, el código y las tablas agregadas sí están
+versionados.
 
 El primer diagnóstico de R encontró 46.392 registros en cada uno de los módulos
 de Democracia, Participación y Capital Social; los identificadores de persona
