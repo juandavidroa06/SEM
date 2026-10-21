@@ -1,0 +1,25 @@
+﻿campo,valor
+Título,Taller 1 SEM – ECP Colombia 2023
+Entidad,Departamento Administrativo Nacional de Estadística (DANE)
+Operación estadística,Encuesta de Cultura Política (ECP)
+Año de referencia,2023
+Unidad de observación,Persona encuestada de 18 años o más
+Cobertura,"Cobertura nacional; excluye territorios nacionales y San Andrés, Providencia y Santa Catalina, según ficha metodológica DANE."
+Diseño muestral declarado,"Probabilístico, estratificado, multietápico y por conglomerados (DANE)"
+Tamaño crudo por módulo,Democracia=46392; Participación=46392; Capital social=46392; Características generales=64759
+Intersección integrada,46392
+Casos completos en 25 indicadores,35024
+Criterio de unión,"Intersección por DIRECTORIO, NRO_ENCUESTA, HOGAR_NUMERO y PERSONA_NUMERO en cuatro módulos"
+Recodificación,99 a faltante en confianza y P6210; P5376 1=Sí y 2=No se recodifican a 1/0; faltantes como celdas vacías
+Variables de diseño disponibles,"No se identificaron ponderador, estrato ni conglomerado en los cuatro ZIP usados"
+Limitación del diseño,Estimaciones sin ponderar y sin corrección por diseño complejo; evitar inferencia poblacional con errores estándar de diseño
+Fecha de descarga,2026-10-19
+URL del catálogo,https://microdatos.dane.gov.co/index.php/catalog/822
+Atribución requerida,Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co.
+Términos de uso,Uso académico para la entrega; no redistribuir públicamente los microdatos sin autorización escrita previa de DANE/ANDA.
+Flujo: Democracia,46392
+Flujo: Participación,46392
+Flujo: Capital social,46392
+Flujo: Características generales,64759
+Flujo: Intersección de los cuatro módulos,46392
+Flujo: Casos completos en 25 ítems,35024

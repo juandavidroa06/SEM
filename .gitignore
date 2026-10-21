@@ -1,0 +1,11 @@
+.Rhistory
+.RData
+.Rproj.user/
+.Ruserdata
+# Microdatos DANE y productos que contienen registros individuales
+datos_crudos/*.zip
+salidas/base_analitica.csv
+salidas/05_faltantes_por_persona.csv
+salidas/05_atipicos_multivariados_casos.csv
+outputs/**/*.xlsx
+entregables/*.zip

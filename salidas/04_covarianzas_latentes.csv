@@ -1,0 +1,5 @@
+"lhs","op","rhs","est","se","z","pvalue","ci.lower","ci.upper","std.lv","std.all","modelo"
+"ConfianzaInterpersonal","~~","ConfianzaInstitucional",0.148918145530504,0.00354783067734127,41.9744229851755,0,0.141964525179669,0.15587176588134,0.26279174046533,0.26279174046533,"referencia_aprobada"
+"ConfianzaInterpersonal","~~","ConfianzaRepresentacionGobierno",0.156996235780556,0.00361062100871395,43.4817820540172,0,0.149919548641653,0.164072922919459,0.279656919513562,0.279656919513562,"institucional_dos_dimensiones"
+"ConfianzaInterpersonal","~~","ConfianzaJusticiaControlProteccionSeguridad",0.136084773550038,0.00356412655574109,38.1818017463026,0,0.129099213864443,0.143070333235634,0.236916516561006,0.236916516561006,"institucional_dos_dimensiones"
+"ConfianzaRepresentacionGobierno","~~","ConfianzaJusticiaControlProteccionSeguridad",0.681692235453068,0.00232246335457852,293.521202006988,0,0.67714029092268,0.686244179983456,0.952283299493251,0.952283299493251,"institucional_dos_dimensiones"

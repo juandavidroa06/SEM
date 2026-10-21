@@ -1,0 +1,2 @@
+"n_completo_total","n_submuestra","p","b1p_asimetria","chi2_asimetria","gl_asimetria","p_asimetria","p_asimetria_mostrado","b2p_curtosis","referencia_bajo_normalidad","z_curtosis","p_curtosis","p_curtosis_mostrado","nota"
+35024,2000,25,58.9968747210513,19665.6249070171,2925,0,"< 2.2e-16",963.094052309059,675,175.328456814161,0,"< 2.2e-16","Approximation using numeric ordinal/binary codes; do not assume continuous normality."

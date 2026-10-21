@@ -1,0 +1,5 @@
+"modulo","csv_en_zip","n_filas","n_variables","filas_con_id_incompleto","ids_duplicados","ids_presentes_en_los_4_modulos"
+"democracia","Democracia.csv",46392,172,0,0,46392
+"participacion","Participaci"n.csv",46392,83,0,0,46392
+"capital_social","Componente capital social.csv",46392,53,0,0,46392
+"caracteristicas_generales","Caracter!asticas generales.csv",64759,18,0,0,46392

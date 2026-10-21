@@ -1,0 +1,2 @@
+"n_completos","p_indicadores","umbral_chi2_0_999","casos_sobre_umbral","porcentaje_sobre_umbral","nota"
+35024,25,52.6196557761728,2591,7.398,"Exploratory flag only: ordinal/binary categories are not multivariate normal. Do not exclude cases using this threshold alone."

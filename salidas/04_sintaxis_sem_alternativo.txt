@@ -1,0 +1,8 @@
+ConfianzaInterpersonal =~ P2025S4 + P2025S5 + P2025S6 + P2025S7
+ConocimientoMecanismos =~ P5376S1 + P5376S2 + P5376S3 + P5376S4 + P5376S5 + P5376S6
+ConfianzaRepresentacionGobierno =~ P5263S2 + P5263S4 + P5263S6 + P5263S8 + P5263S10 + P5263S12 + P5263S14 + P5263S15
+ConfianzaJusticiaControlProteccionSeguridad =~ P5263S1 + P5263S3 + P5263S5 + P5263S7 + P5263S9 + P5263S11 + P5263S13
+ConocimientoMecanismos ~ ConfianzaInterpersonal + ConfianzaRepresentacionGobierno + ConfianzaJusticiaControlProteccionSeguridad
+ConfianzaInterpersonal ~~ ConfianzaRepresentacionGobierno
+ConfianzaInterpersonal ~~ ConfianzaJusticiaControlProteccionSeguridad
+ConfianzaRepresentacionGobierno ~~ ConfianzaJusticiaControlProteccionSeguridad

@@ -1,0 +1,26 @@
+"variable","etiqueta","n","n_validos","n_perdidos","porcentaje_perdido","distribucion","n_completos_en_indicadores"
+"P2025S4","Confianza en personas desconocidas",46392,45690,702,1.51,"1:24998 | 2:12065 | 3:6135 | 4:1586 | 5:906",35024
+"P2025S5","Confianza en vecinos(as)",46392,45911,481,1.04,"1:5464 | 2:10456 | 3:20166 | 4:7077 | 5:2748",35024
+"P2025S6","Confianza en amistades",46392,45967,425,0.92,"1:2779 | 2:5766 | 3:18771 | 4:13777 | 5:4874",35024
+"P2025S7","Confianza en personas de otra nacionalidad",46392,45288,1104,2.38,"1:23690 | 2:11867 | 3:7192 | 4:1682 | 5:857",35024
+"P5263S1","Confianza en ProcuradurC-a General de la NaciC3n",46392,41447,4945,10.66,"1:8776 | 2:8283 | 3:18190 | 4:4543 | 5:1655",35024
+"P5263S2","Confianza en AlcaldC-a Municipal/Distrital",46392,43301,3091,6.66,"1:9858 | 2:9247 | 3:18166 | 4:4640 | 5:1390",35024
+"P5263S3","Confianza en Fuerzas Militares",46392,43519,2873,6.19,"1:6571 | 2:6706 | 3:18864 | 4:8123 | 5:3255",35024
+"P5263S4","Confianza en Congreso de la RepC:blica",46392,42833,3559,7.67,"1:12573 | 2:9976 | 3:15705 | 4:3554 | 5:1025",35024
+"P5263S5","Confianza en jueces y magistrados",46392,42638,3754,8.09,"1:9399 | 2:9218 | 3:18422 | 4:4334 | 5:1265",35024
+"P5263S6","Confianza en Asamblea departamental",46392,37143,9249,19.94,"1:8557 | 2:8661 | 3:16055 | 4:3086 | 5:784",35024
+"P5263S7","Confianza en ContralorC-a",46392,41624,4768,10.28,"1:8610 | 2:8578 | 3:18567 | 4:4563 | 5:1306",35024
+"P5263S8","Confianza en concejos municipales/distritales",46392,42399,3993,8.61,"1:9792 | 2:9822 | 3:18250 | 4:3656 | 5:879",35024
+"P5263S9","Confianza en PolicC-a",46392,43878,2514,5.42,"1:8828 | 2:8273 | 3:17857 | 4:6716 | 5:2204",35024
+"P5263S10","Confianza en partidos o movimientos polC-ticos",46392,43466,2926,6.31,"1:14883 | 2:11066 | 3:14570 | 4:2363 | 5:584",35024
+"P5263S11","Confianza en DefensorC-a del Pueblo",46392,42655,3737,8.06,"1:6538 | 2:6662 | 3:19492 | 4:7753 | 5:2210",35024
+"P5263S12","Confianza en GobernaciC3n",46392,38203,8189,17.65,"1:8477 | 2:8276 | 3:16451 | 4:3887 | 5:1112",35024
+"P5263S13","Confianza en FiscalC-a General de la NaciC3n",46392,42803,3589,7.74,"1:8513 | 2:7874 | 3:18742 | 4:5836 | 5:1838",35024
+"P5263S14","Confianza en RegistradurC-a Nacional del Estado Civil",46392,43100,3292,7.1,"1:6720 | 2:6910 | 3:18807 | 4:8035 | 5:2628",35024
+"P5263S15","Confianza en Presidencia de la RepC:blica",46392,43564,2828,6.1,"1:10709 | 2:8768 | 3:17082 | 4:5140 | 5:1865",35024
+"P5376S1","Conoce revocatoria del mandato",46392,46392,0,0,"0:27322 | 1:19070",35024
+"P5376S2","Conoce iniciativa popular legislativa o normativa",46392,46392,0,0,"0:35733 | 1:10659",35024
+"P5376S3","Conoce referendo aprobatorio o derogatorio",46392,46392,0,0,"0:27925 | 1:18467",35024
+"P5376S4","Conoce plebiscito",46392,46392,0,0,"0:26643 | 1:19749",35024
+"P5376S5","Conoce consulta popular",46392,46392,0,0,"0:28835 | 1:17557",35024
+"P5376S6","Conoce cabildo abierto",46392,46392,0,0,"0:34805 | 1:11587",35024

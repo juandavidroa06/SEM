@@ -1,0 +1,3 @@
+"muestra","estado","estadistico_chi_cuadrado","gl","p_valor","p_valor_mostrado","patrones","n","p_indicadores","iteraciones"
+"23 items; omits Assembly and Governor office (Bogota not applicable)","converged",26698.6027022874,15979,0,"< 2.2e-16",958,46392,23,8
+"25 items; includes Assembly and Governor office","converged",40316.588816201,23992,0,"< 2.2e-16",1331,46392,25,10
