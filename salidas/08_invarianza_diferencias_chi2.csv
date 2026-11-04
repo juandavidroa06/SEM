@@ -1,0 +1,4 @@
+"","Df","AIC","BIC","Chisq","Chisq diff","Df diff","Pr(>Chisq)"
+"invar$configural",544,NA,NA,26798.6021248605,NA,NA,NA
+"invar$umbrales",582,NA,NA,26832.6230087858,59.5116945766,38,0.0143846773270307
+"invar$metrica_ordinal",604,NA,NA,26866.6832559563,31.3171852226,22,0.08980544177006

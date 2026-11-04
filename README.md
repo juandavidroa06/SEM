@@ -96,3 +96,20 @@ Para exportar las sintaxis del modelo de referencia y el rival, ejecutar
 `source("07_especificacion_modelo.R")`; consultar `07_especificacion_modelo.md`
 para el marco teórico, las matrices, la identificación y la equivalencia posible
 entre las dos direcciones estructurales.
+
+## Taller 2: ponderación y Fase 2/3
+
+Los ZIP de `datos_crudos/` incluyen ahora `Caracteriasticas generales 2.zip` y
+`Tabla de viviendas.zip`. Esta última contiene `FEX_P`, el factor de expansión
+documentado por el DANE, enlazable a las personas por `DIRECTORIO`. Ejecutar
+`source("08_fase2_sem.R")` para reproducir la integración de cinco módulos,
+verificar ponderadores y grupos y, cuando estén instalados `lavaan` y
+`semTools`, ejecutar el AFC, SEM ponderado, tamaños de efecto e invariancia por
+sexo. Ver `08_hallazgos_muestreo_efectos.md` para los hallazgos confirmados y
+la limitación de que los microdatos anonimizados no publican identificadores
+del estrato ni del conglomerado muestral. El DANE no ofrece esos identificadores
+ni un cálculo alternativo de varianzas para este análisis; por ello las
+inferencias se reportan como exploratorias y sin ajuste completo del diseño.
+La síntesis lista para desarrollar el manuscrito está en
+`09_base_redaccion_articulo.md`; el libro de resultados está en
+`outputs/01a15760-d284-7790-91e9-a88837c249b8/Taller2_SEM_resultados.xlsx`.

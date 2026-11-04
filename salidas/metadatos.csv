@@ -11,8 +11,8 @@ Intersección integrada,46392
 Casos completos en 25 indicadores,35024
 Criterio de unión,"Intersección por DIRECTORIO, NRO_ENCUESTA, HOGAR_NUMERO y PERSONA_NUMERO en cuatro módulos"
 Recodificación,99 a faltante en confianza y P6210; P5376 1=Sí y 2=No se recodifican a 1/0; faltantes como celdas vacías
-Variables de diseño disponibles,"No se identificaron ponderador, estrato ni conglomerado en los cuatro ZIP usados"
-Limitación del diseño,Estimaciones sin ponderar y sin corrección por diseño complejo; evitar inferencia poblacional con errores estándar de diseño
+Variables de diseño disponibles,"FEX_P (factor de expansión) en Tabla de viviendas.zip, enlazado por DIRECTORIO; no se identificaron UPM/conglomerado ni estrato en los microdatos anonimizados"
+Limitación del diseño,"FEX_P permite ponderar estimaciones; no es posible corregir completamente errores estándar por conglomeración y estratificación con las variables publicadas disponibles"
 Fecha de descarga,2026-10-19
 URL del catálogo,https://microdatos.dane.gov.co/index.php/catalog/822
 Atribución requerida,Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co.
