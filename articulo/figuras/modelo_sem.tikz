@@ -1,0 +1,19 @@
+\begin{tikzpicture}[
+  latent/.style={ellipse,draw=black,fill=blue!8,minimum width=3.4cm,minimum height=1.15cm,align=center,font=\small},
+  observed/.style={rectangle,draw=black,fill=gray!8,minimum width=4.2cm,minimum height=1.0cm,align=center,font=\small},
+  path/.style={-{Stealth[length=2.5mm]},thick},
+  cov/.style={<->,dashed,thick}
+]
+\node[observed] (itemsI) at (-5,2.0) {P2025S4--P2025S7\\4 indicadores ordinales};
+\node[latent] (ip) at (0,2.0) {Confianza interpersonal\\$\xi_1$};
+\node[observed] (itemsT) at (-5,-1.2) {P5263S1--P5263S15\\15 indicadores ordinales};
+\node[latent] (inst) at (0,-1.2) {Confianza institucional\\$\xi_2$};
+\node[latent] (fam) at (6,0.4) {Familiaridad autorreportada\\$\eta_1$};
+\node[observed] (itemsK) at (11,0.4) {P5376S1--P5376S6\\6 indicadores binarios};
+\draw[path] (itemsI) -- (ip);
+\draw[path] (itemsT) -- (inst);
+\draw[path] (fam) -- (itemsK);
+\draw[path] (ip) to[bend left=10] node[above,sloped] {H1: $\beta=.094^{***}$} (fam);
+\draw[path] (inst) to[bend right=10] node[below,sloped] {H2: $\beta=.065^{***}$} (fam);
+\draw[cov] (ip) -- node[left,align=center] {$r=.265^{***}$} (inst);
+\end{tikzpicture}
