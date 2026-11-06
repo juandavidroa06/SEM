@@ -13,7 +13,50 @@ hip<-leer("salidas/08_hipotesis.csv")
 param<-leer("salidas/08_parametros_afc.csv"); medicion<-param[param$op=="=~",,drop=FALSE]
 cr<-leer("salidas/08_confiabilidad.csv");ave<-leer("salidas/08_AVE.csv")
 discriminante<-unir(list(leer("salidas/08_fornell_larcker.csv"),leer("salidas/08_HTMT.csv")),c("Fornell_Larcker","HTMT_no_ponderado"))
-efectos<-if(nrow(hip)){campos<-hip[,intersect(c("rhs","est","se","std.all","ci.lower","ci.upper"),names(hip)),drop=FALSE];directo<-data.frame(tipo="directo",nota="Ruta estructural estimada",campos);total<-directo;total$tipo<-"total";total$nota<-"Igual al directo: el modelo no especifica mediadores";indirecto<-data.frame(tipo="indirecto",nota="No aplica: el modelo aprobado no contiene mediador",campos);indirecto[,setdiff(names(indirecto),c("tipo","nota"))]<-NA;rbind(directo,indirecto,total)}else data.frame()
+efectos <- data.frame()
+if (nrow(hip)) {
+  campos <- data.frame(
+    rhs=hip$rhs, est=hip$est, se=hip$se, z=hip$z, pvalue=hip$pvalue,
+    std.all=hip$std.all, ci.lower=hip$ci.lower, ci.upper=hip$ci.upper,
+    EE_original=NA_real_, deff=NA_real_
+  )
+  directo <- data.frame(tipo="directo", nota="Ruta estructural estimada", campos)
+  total <- directo
+  total$tipo <- "total"
+  total$nota <- "Igual al directo: el modelo no especifica mediadores"
+  indirecto <- directo
+  indirecto$tipo <- "indirecto"
+  indirecto$nota <- "No aplica: el modelo aprobado no contiene mediador"
+  indirecto[, setdiff(names(indirecto), c("tipo", "nota", "rhs"))] <- NA
+  sensibilidad <- leer("salidas/08_sensibilidad_pesos_faltantes.csv")
+  sens_rows <- data.frame()
+  if (nrow(sensibilidad)) {
+    labels <- c(casos_completos_sin_pesos="Casos completos sin pesos",
+                casos_completos_FEX_P="Casos completos con FEX_P",
+                pares_FEX_P="Pares con FEX_P")
+    sens_rows <- data.frame(
+      tipo=paste0("sensibilidad: ", unname(labels[sensibilidad$especificacion])),
+      nota="Estimacion de sensibilidad; no es el efecto principal",
+      rhs=sensibilidad$rhs, est=sensibilidad$est, se=sensibilidad$se,
+      z=sensibilidad$z, pvalue=sensibilidad$pvalue, std.all=sensibilidad$std.all,
+      ci.lower=sensibilidad$ci.lower, ci.upper=sensibilidad$ci.upper,
+      EE_original=NA_real_, deff=NA_real_
+    )
+  }
+  diseno <- leer("salidas/08_sensibilidad_deff.csv")
+  deff_rows <- data.frame()
+  if (nrow(diseno)) {
+    deff_rows <- data.frame(
+      tipo="efecto de diseno aproximado",
+      nota="Kish; EE inflado por sqrt(deff), sin UPM ni estratos",
+      rhs=diseno$ruta, est=diseno$B, se=diseno$EE_inflado, z=diseno$z,
+      pvalue=diseno$p, std.all=NA_real_, ci.lower=diseno$IC95_inf,
+      ci.upper=diseno$IC95_sup, EE_original=diseno$EE_original,
+      deff=diseno$deff_kish
+    )
+  }
+  efectos <- rbind(directo, indirecto, total, sens_rows, deff_rows)
+}
 inv<-list(secuencia=leer("salidas/08_invarianza_sexo.csv"),cambios=leer("salidas/08_invarianza_cambios_ajuste.csv"),diferencias=leer("salidas/08_invarianza_diferencias_chi2.csv"),Wald=leer("salidas/08_invarianza_wald_rutas.csv"))
 if(requireNamespace("knitr",quietly=TRUE)){
  dir.create("articulo/tablas",recursive=TRUE,showWarnings=FALSE)

@@ -16,7 +16,8 @@ utils::write.csv(lavaan::parameterEstimates(afc, standardized = TRUE),
   "salidas/08_parametros_afc.csv", row.names = FALSE, fileEncoding = "UTF-8")
 sol_afc <- lavaan::standardizedSolution(afc, ci = TRUE)
 utils::write.csv(sol_afc, "salidas/08_cargas_afc_estandarizadas.csv", row.names = FALSE, fileEncoding = "UTF-8")
-utils::write.csv(semTools::compRelSEM(afc), "salidas/08_confiabilidad.csv", fileEncoding = "UTF-8")
+cr_obj <- semTools::compRelSEM(afc)
+utils::write.csv(cr_obj, "salidas/08_confiabilidad.csv", fileEncoding = "UTF-8")
 ave <- semTools::AVE(afc)
 utils::write.csv(ave, "salidas/08_AVE.csv", fileEncoding = "UTF-8")
 cor_lv <- lavaan::lavInspect(afc, "cor.lv")
@@ -34,9 +35,17 @@ if (requireNamespace("knitr", quietly = TRUE)) {
   writeLines(knitr::kable(cargas, format = "latex", booktabs = TRUE, longtable = TRUE,
     digits = 3, row.names = FALSE, format.args = list(decimal.mark = ",", big.mark = "."), caption = "Cargas factoriales estandarizadas del AFC ponderado"),
     "articulo/tablas/cargas_estandarizadas.tex")
-  cr_mat <- as.matrix(semTools::compRelSEM(afc))
+  cr_mat <- as.matrix(cr_obj)
   ht_mat <- as.matrix(htmt)
-  fl_tab <- data.frame(constructo = rownames(cor_lv), CR = as.numeric(cr_mat[1, rownames(cor_lv)]),
+  constructos <- rownames(cor_lv)
+  if (all(constructos %in% colnames(cr_mat))) {
+    cr_vals <- cr_mat[1, constructos]
+  } else if (all(constructos %in% rownames(cr_mat))) {
+    cr_vals <- cr_mat[constructos, 1]
+  } else {
+    stop("Los nombres de los constructos de CR no coinciden con cor.lv.")
+  }
+  fl_tab <- data.frame(constructo = constructos, CR = as.numeric(cr_vals),
     AVE = as.numeric(ave[rownames(cor_lv)]), raiz_AVE = sqrt(as.numeric(ave[rownames(cor_lv)])),
     max_correlacion_latente = vapply(rownames(cor_lv), function(x) max(abs(cor_lv[x, setdiff(colnames(cor_lv), x)])), numeric(1)),
     max_HTMT_no_ponderado = vapply(rownames(cor_lv), function(x) max(abs(ht_mat[x, setdiff(colnames(ht_mat), x)])), numeric(1)))
