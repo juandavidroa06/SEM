@@ -50,11 +50,11 @@ Proyecto de trabajo en R para el Taller 1 de Modelacion de Ecuaciones Estructura
 Para reproducir los análisis, descarga los módulos de la ECP 2023 desde el
 [catálogo ANDA del DANE](https://microdatos.dane.gov.co/index.php/catalog/822)
 y coloca los ZIP en `datos_crudos/` con los nombres esperados por los scripts.
-No subas esos archivos al repositorio. El Excel de entrega y el ZIP final también
-se mantienen localmente porque incluyen filas de microdatos; están en
-`outputs/01a15760-d284-7790-91e9-a88837c249b8/` y `entregables/` en la carpeta
-de trabajo original. El reporte PDF, el código y las tablas agregadas sí están
-versionados.
+No subas esos archivos al repositorio. El libro `outputs/Taller2_SEM_resultados.xlsx`
+y `entregables/Taller2_SEM_Roa_Aldana_Rodriguez.zip` contienen resultados
+agregados y código, no filas individuales ni ZIP del DANE; ambos forman parte
+de la entrega versionada. El paquete reproducible contiene los scripts, el
+artículo compilado y las salidas agregadas necesarias para auditarlo.
 
 El primer diagnóstico de R encontró 46.392 registros en cada uno de los módulos
 de Democracia, Participación y Capital Social; los identificadores de persona
@@ -116,7 +116,7 @@ Estos scripts leen los ZIP crudos: la base integrada del Taller 1 no trae
    hipótesis y sensibilidades de pesos, faltantes y efecto aproximado de diseño.
 4. `source("03_multigrupo.R")`: estima invariancia ordinal por sexo y Wald con
    ajustes Bonferroni y Holm.
-5. `source("04_exportar_resultados.R")`: crea el libro Excel local en `outputs/`.
+5. `source("04_exportar_resultados.R")`: genera `outputs/Taller2_SEM_resultados.xlsx`.
 
 Los scripts requieren `lavaan`, `semTools` y `writexl` según corresponda;
 comprueban los paquetes y no los instalan automáticamente. El script histórico
@@ -127,6 +127,7 @@ del estrato ni del conglomerado muestral. El DANE no ofrece esos identificadores
 ni un cálculo alternativo de varianzas para este análisis; por ello las
 inferencias se reportan como exploratorias y sin ajuste completo del diseño.
 La síntesis lista para desarrollar el manuscrito está en
-`09_base_redaccion_articulo.md`. El libro es un derivado local y no se versiona.
-Los scripts usan rutas relativas al proyecto y semilla fija `2026`; la biblioteca
+`09_base_redaccion_articulo.md`. El libro y el ZIP final están versionados;
+ninguno contiene microdatos. Los scripts usan rutas relativas al proyecto y
+semilla fija `2026`; la biblioteca
 de paquetes opcional se agrega solo si existe bajo el perfil del sistema.

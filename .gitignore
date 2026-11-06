@@ -10,6 +10,11 @@ salidas/05_atipicos_multivariados_casos.csv
 outputs/**/*.xlsx
 /outputs/Taller2_SEM_resultados.xlsx
 entregables/*.zip
+# Versionar solo los productos finales agregados, sin microdatos.
+!outputs/Taller2_SEM_resultados.xlsx
+!entregables/Taller2_SEM_Roa_Aldana_Rodriguez.zip
+# Copia local duplicada; las fuentes canónicas están en articulo/ y en el ZIP.
+/entregables/articulo_SEM/
 articulo/*.aux
 articulo/*.log
 articulo/*.out
