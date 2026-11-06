@@ -7,11 +7,10 @@
 
 set.seed(2026)
 
-# Biblioteca de usuario de R para Windows. Permite usar los paquetes instalados
-# sin depender de la biblioteca temporal de esta sesión.
-lib_usuario <- file.path(Sys.getenv("USERPROFILE"), "Documents", "R",
-                         "win-library", "4.6")
-if (dir.exists(lib_usuario)) .libPaths(c(lib_usuario, .libPaths()))
+# Usa las bibliotecas R configuradas en el equipo; no presupone rutas locales.
+lib_usuario <- file.path(Sys.getenv("USERPROFILE"), "AppData", "Local", "R", "win-library",
+                         paste0(R.version$major, ".", strsplit(R.version$minor, "\\.")[[1]][1]))
+if (nzchar(Sys.getenv("USERPROFILE")) && dir.exists(lib_usuario)) .libPaths(c(lib_usuario, .libPaths()))
 
 leer_csv_zip <- function(ruta_zip) {
   miembros <- utils::unzip(ruta_zip, list = TRUE)$Name
@@ -125,9 +124,9 @@ afc <- do.call(lavaan::cfa, c(list(model = modelo_medicion), opts))
 sem <- do.call(lavaan::sem, c(list(model = modelo_sem), opts))
 alt <- do.call(lavaan::sem, c(list(model = modelo_alt), opts))
 
-fit_names <- c("chisq.scaled", "df", "pvalue.scaled", "cfi.robust", "tli.robust",
+fit_names <- c("chisq", "chisq.scaled", "df", "pvalue", "pvalue.scaled", "cfi.robust", "tli.robust",
                "rmsea.robust", "rmsea.ci.lower.robust", "rmsea.ci.upper.robust",
-               "cfi.scaled", "tli.scaled", "rmsea.scaled", "cfi", "tli", "rmsea", "srmr")
+               "cfi.scaled", "tli.scaled", "rmsea.scaled", "rmsea.ci.lower", "rmsea.ci.upper", "cfi", "tli", "rmsea", "srmr")
 fits <- list(AFC_correlacionado = afc, SEM_referencia = sem,
              SEM_institucional_2D_exploratorio = alt)
 fit_table <- do.call(rbind, lapply(names(fits), function(nm) {

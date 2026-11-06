@@ -1,0 +1,2 @@
+"modelo","n","convergio","chisq.scaled","df","pvalue.scaled","cfi.robust","tli.robust","rmsea.robust","rmsea.ci.lower.robust","rmsea.ci.upper.robust","cfi.scaled","tli.scaled","rmsea.scaled","cfi","tli","rmsea","srmr"
+"AFC_correlacionado",46392,TRUE,27181.3531654474,272,0,0.900003090605362,0.889709291108855,0.0919021410529274,0.0907674846768544,0.0930418749500202,0.980910383941651,0.978945276406233,0.0461796152392128,0.995326904701476,0.994845850773686,0.0454088101984305,0.0400992284335886

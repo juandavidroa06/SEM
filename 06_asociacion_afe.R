@@ -1,6 +1,8 @@
 # Taller 1 SEM - asociaciones, confiabilidad y estructura exploratoria
 # Ejecutar desde Taller1_SEM_ECP2023.Rproj. Requiere psych y GPArotation.
-.libPaths(c("C:/Users/juanr/AppData/Local/R/win-library/4.6", .libPaths()))
+lib_usuario <- file.path(Sys.getenv("USERPROFILE"), "AppData", "Local", "R", "win-library",
+                         paste0(R.version$major, ".", strsplit(R.version$minor, "\\.")[[1]][1]))
+if (nzchar(Sys.getenv("USERPROFILE")) && dir.exists(lib_usuario)) .libPaths(c(lib_usuario, .libPaths()))
 if (!requireNamespace("psych", quietly = TRUE)) stop("Instale psych: install.packages('psych').")
 if (!requireNamespace("GPArotation", quietly = TRUE)) stop("Instale GPArotation: install.packages('GPArotation').")
 

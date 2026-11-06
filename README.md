@@ -101,15 +101,32 @@ entre las dos direcciones estructurales.
 
 Los ZIP de `datos_crudos/` incluyen ahora `Caracteriasticas generales 2.zip` y
 `Tabla de viviendas.zip`. Esta última contiene `FEX_P`, el factor de expansión
-documentado por el DANE, enlazable a las personas por `DIRECTORIO`. Ejecutar
-`source("08_fase2_sem.R")` para reproducir la integración de cinco módulos,
-verificar ponderadores y grupos y, cuando estén instalados `lavaan` y
-`semTools`, ejecutar el AFC, SEM ponderado, tamaños de efecto e invariancia por
-sexo. Ver `08_hallazgos_muestreo_efectos.md` para los hallazgos confirmados y
+documentado por el DANE, enlazable a las personas por `DIRECTORIO`.
+Para Taller 2, ejecutar desde la carpeta del proyecto y en este orden:
+
+Estos scripts leen los ZIP crudos: la base integrada del Taller 1 no trae
+`FEX_P`, por eso el factor se enlaza desde Tabla de viviendas usando
+`DIRECTORIO`.
+
+1. `source("00_preparacion.R")`: integra los cinco módulos, enlaza `FEX_P`
+   desde Tabla de viviendas por `DIRECTORIO` y recodifica los 25 indicadores.
+2. `source("01_afc.R")`: estima el AFC ponderado y genera medición,
+   confiabilidad, AVE, HTMT y Fornell--Larcker.
+3. `source("02_estructural.R")`: estima SEM de referencia y rival, y produce
+   hipótesis y sensibilidades de pesos, faltantes y efecto aproximado de diseño.
+4. `source("03_multigrupo.R")`: estima invariancia ordinal por sexo y Wald con
+   ajustes Bonferroni y Holm.
+5. `source("04_exportar_resultados.R")`: crea el libro Excel local en `outputs/`.
+
+Los scripts requieren `lavaan`, `semTools` y `writexl` según corresponda;
+comprueban los paquetes y no los instalan automáticamente. El script histórico
+`08_fase2_sem.R` se conserva para cotejar las salidas anteriores. Ver
+`08_hallazgos_muestreo_efectos.md` para los hallazgos confirmados y
 la limitación de que los microdatos anonimizados no publican identificadores
 del estrato ni del conglomerado muestral. El DANE no ofrece esos identificadores
 ni un cálculo alternativo de varianzas para este análisis; por ello las
 inferencias se reportan como exploratorias y sin ajuste completo del diseño.
 La síntesis lista para desarrollar el manuscrito está en
-`09_base_redaccion_articulo.md`; el libro de resultados está en
-`outputs/01a15760-d284-7790-91e9-a88837c249b8/Taller2_SEM_resultados.xlsx`.
+`09_base_redaccion_articulo.md`. El libro es un derivado local y no se versiona.
+Los scripts usan rutas relativas al proyecto y semilla fija `2026`; la biblioteca
+de paquetes opcional se agrega solo si existe bajo el perfil del sistema.

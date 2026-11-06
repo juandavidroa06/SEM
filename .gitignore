@@ -8,4 +8,10 @@ salidas/base_analitica.csv
 salidas/05_faltantes_por_persona.csv
 salidas/05_atipicos_multivariados_casos.csv
 outputs/**/*.xlsx
+/outputs/Taller2_SEM_resultados.xlsx
 entregables/*.zip
+articulo/*.aux
+articulo/*.log
+articulo/*.out
+articulo/*.bbl
+articulo/*.blg
