@@ -1,3 +1,5 @@
+> Nota histórica de preparación. La revisión vigente está en `REVISION_PUBLICACION.md` y `articulo/articulo.pdf`. Las diferencias por ruta ajustadas por Holm/Bonferroni no conservan significación (p=0,067); no deben usarse las conclusiones previas como versión final.
+
 # Base de redacción para el artículo
 
 **Estado:** borrador de trabajo basado en los análisis disponibles; requiere revisión del equipo y del docente antes de enviar o presentar como manuscrito final.

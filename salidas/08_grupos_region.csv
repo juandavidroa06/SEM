@@ -1,6 +1,6 @@
-"Var1","Freq"
-"Bogota",4451
-"Caribe",10239
-"Oriental",9475
-"Central",9545
-"Pacifico",12682
+"region","n","n_completos"
+"Bogota",4451,0
+"Caribe",10239,8943
+"Oriental",9475,8218
+"Central",9545,7464
+"Pacifico",12682,10399

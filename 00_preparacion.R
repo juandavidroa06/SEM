@@ -26,6 +26,8 @@ ids <- c("DIRECTORIO", "NRO_ENCUESTA", "HOGAR_NUMERO", "PERSONA_NUMERO")
 mods <- lapply(rutas, leer_csv_zip)
 if (any(vapply(mods, function(x) anyDuplicated(x[ids]) > 0L, logical(1))))
   stop("Hay claves persona duplicadas en los módulos.")
+if (any(vapply(mods, function(x) anyNA(x[ids]), logical(1))))
+  stop("Hay claves persona incompletas en los módulos.")
 datos <- Reduce(function(x, y) merge(x, y, by = ids, all = FALSE, sort = FALSE), mods)
 
 # Taller 1 no tenía FEX_P en los cuatro ZIP temáticos; aquí se incorpora la
@@ -49,6 +51,8 @@ for (v in items_conocimiento)
 for (v in items) datos[[v]] <- ordered(datos[[v]],
   levels = if (v %in% items_conocimiento) c(0, 1) else 1:5)
 datos$sexo <- factor(datos$P220, levels = c(1, 2), labels = c("Hombre", "Mujer"))
+datos$region <- factor(datos$REGION, levels = 1:5,
+  labels = c("Bogota", "Caribe", "Oriental", "Central", "Pacifico"))
 
 modelo_medicion <- paste(
   paste0("ConfianzaInterpersonal =~ ", paste(items_interpersonal, collapse = " + ")),
@@ -74,5 +78,22 @@ modelo_alt <- paste(
 opts <- list(data = datos, ordered = items, estimator = "WLSMV",
              missing = "pairwise", sampling.weights = "FEX_P")
 dir.create("salidas", showWarnings = FALSE)
+neff_kish <- function(w) sum(w)^2 / sum(w^2)
+completos <- complete.cases(datos[items])
+utils::write.csv(data.frame(
+  indicador = c("Personas integradas", "Personas con 25 indicadores completos"),
+  n_no_ponderado = c(nrow(datos), sum(completos)),
+  suma_FEX_P = c(sum(datos$FEX_P), sum(datos$FEX_P[completos])),
+  n_efectivo_Kish_solo_por_pesos = c(neff_kish(datos$FEX_P), neff_kish(datos$FEX_P[completos]))),
+  "salidas/08_diseno_muestral.csv", row.names = FALSE)
+utils::write.csv(do.call(rbind, lapply(levels(datos$sexo), function(g) {
+  ix <- !is.na(datos$sexo) & datos$sexo == g
+  data.frame(sexo = g, n = sum(ix), suma_FEX_P = sum(datos$FEX_P[ix]),
+    n_efectivo_Kish_solo_por_pesos = neff_kish(datos$FEX_P[ix]))
+})), "salidas/08_grupos_sexo.csv", row.names = FALSE)
+utils::write.csv(do.call(rbind, lapply(levels(datos$region), function(g) {
+  ix <- !is.na(datos$region) & datos$region == g
+  data.frame(region = g, n = sum(ix), n_completos = sum(completos & ix))
+})), "salidas/08_grupos_region.csv", row.names = FALSE)
 cat("Preparación terminada:", nrow(datos), "personas;", length(items), "indicadores.\n")
 sessionInfo()

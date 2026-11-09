@@ -1,16 +1,30 @@
 # Genera el libro local de entrega. Se mantiene fuera de Git si contiene
 # derivados de microdatos; nunca incorpora filas individuales.
 set.seed(2026)
+options(knitr.kable.NA = "--")
 lib_usuario <- file.path(Sys.getenv("USERPROFILE"), "AppData", "Local", "R", "win-library",
                          paste0(R.version$major, ".", strsplit(R.version$minor, "\\.")[[1]][1]))
 if (nzchar(Sys.getenv("USERPROFILE")) && dir.exists(lib_usuario)) .libPaths(c(lib_usuario, .libPaths()))
-leer<-function(f)if(file.exists(f))utils::read.csv(f,check.names=FALSE,fileEncoding="UTF-8")else data.frame()
+if (!requireNamespace("knitr", quietly = TRUE))
+  stop("Se requiere knitr para regenerar todas las tablas del artículo.")
+leer<-function(f) {
+  if (!file.exists(f)) stop("Falta insumo: ", f, ". Ejecute 00_ejecutar_taller2.R.")
+  utils::read.csv(f,check.names=FALSE,fileEncoding="UTF-8")
+}
+requeridos <- c("08_ajuste_afc.csv", "08_ajuste_sem.csv", "08_invarianza_sexo.csv",
+  "08_cargas_afc_estandarizadas.csv", "08_confiabilidad.csv", "08_AVE.csv",
+  "08_fornell_larcker.csv", "08_HTMT.csv", "08_hipotesis.csv", "08_R2.csv",
+  "08_tamanos_efecto.csv", "08_residuos_correlacion.csv", "08_matriz_asociacion_ponderada.csv",
+  "08_sensibilidad_territorial.csv", "08_ajuste_territorial.csv", "08_revision_medicion.csv",
+  "08_revision_medicion_rutas.csv", "05_descriptivos_indicadores.csv", "06_matriz_policorica.csv")
+if (any(!file.exists(file.path("salidas", requeridos)))) stop("Salidas incompletas. Ejecute 00_ejecutar_taller2.R.")
 unir<-function(xs,tags){xs<-lapply(seq_along(xs),function(i){x<-xs[[i]];if(!nrow(x))return(NULL);names(x)[!nzchar(names(x))]<-"variable";names(x)<-make.unique(names(x),sep="_");x$seccion<-tags[i];x});xs<-Filter(Negate(is.null),xs);if(!length(xs))return(data.frame());cols<-unique(unlist(lapply(xs,names)));do.call(rbind,lapply(xs,function(x){for(n in setdiff(cols,names(x)))x[[n]]<-NA;x[,cols,drop=FALSE]}))}
-fit_files<-c("salidas/08_ajuste.csv","salidas/08_ajuste_afc.csv","salidas/08_ajuste_sem.csv","salidas/08_invarianza_sexo.csv")
+fit_files<-c("salidas/08_ajuste_afc.csv","salidas/08_ajuste_sem.csv","salidas/08_invarianza_sexo.csv")
 ajuste<-unir(lapply(fit_files,leer),basename(fit_files))
 if(nrow(ajuste)&&"modelo"%in%names(ajuste))ajuste<-ajuste[!duplicated(ajuste$modelo,fromLast=TRUE),,drop=FALSE]
+utils::write.csv(ajuste, "salidas/08_ajuste.csv", row.names=FALSE, fileEncoding="UTF-8")
 hip<-leer("salidas/08_hipotesis.csv")
-param<-leer("salidas/08_parametros_afc.csv"); medicion<-param[param$op=="=~",,drop=FALSE]
+param<-leer("salidas/08_cargas_afc_estandarizadas.csv"); medicion<-param[param$op=="=~",,drop=FALSE]
 cr<-leer("salidas/08_confiabilidad.csv");ave<-leer("salidas/08_AVE.csv")
 discriminante<-unir(list(leer("salidas/08_fornell_larcker.csv"),leer("salidas/08_HTMT.csv")),c("Fornell_Larcker","HTMT_no_ponderado"))
 efectos <- data.frame()
@@ -47,8 +61,8 @@ if (nrow(hip)) {
   deff_rows <- data.frame()
   if (nrow(diseno)) {
     deff_rows <- data.frame(
-      tipo="efecto de diseno aproximado",
-      nota="Kish; EE inflado por sqrt(deff), sin UPM ni estratos",
+      tipo="escenario hipotetico de EE",
+      nota="Inflacion adicional ilustrativa; puede duplicar variabilidad de pesos. No estima el diseno",
       rhs=diseno$ruta, est=diseno$B, se=diseno$EE_inflado, z=diseno$z,
       pvalue=diseno$p, std.all=NA_real_, ci.lower=diseno$IC95_inf,
       ci.upper=diseno$IC95_sup, EE_original=diseno$EE_original,
@@ -63,23 +77,37 @@ if(requireNamespace("knitr",quietly=TRUE)){
  resize_tabular<-function(x,width="\\linewidth") {z<-strsplit(x,"\n",fixed=TRUE)[[1]];i<-which(grepl("^\\\\begin\\{tabular\\}",z))[1];j<-tail(which(grepl("^\\\\end\\{tabular\\}",z)),1);if(!is.na(i)&&length(j)) {suffix<-sub("^\\\\begin\\{tabular\\}","",z[i]);z[i]<-paste0("\\resizebox{",width,"}{!}{\\begin{tabular}",suffix);z[j]<-paste0(z[j],"}")};paste(z,collapse="\n")}
  ind<-data.frame(Constructo=c("Confianza interpersonal","Confianza institucional","Familiaridad autorreportada"),Contenido=c("Confianza en personas desconocidas, vecinos, amistades y personas de otra nacionalidad","Confianza en 15 instituciones y actores públicos","Reconocimiento de seis mecanismos formales de participación"),Indicadores=c("P2025S4--P2025S7","P5263S1--P5263S15","P5376S1--P5376S6"),Tratamiento=c("Ordinal 1--5; 99 a faltante","Ordinal 1--5; 99 a faltante; S6/S12 no aplican en Bogotá","Binaria; 1=conoce/ha oído y 0=no conoce"))
  indout<-knitr::kable(ind,format="latex",booktabs=TRUE,row.names=FALSE,caption="Constructos, indicadores y codificación",label="indicadores")
- indout<-sub("\\\\begin\\{tabular\\}\\[t\\]\\{llll\\}","\\\\begin{tabularx}{\\\\textwidth}{p{2.8cm}X p{2.5cm} X}",indout,perl=TRUE);indout<-sub("\\\\end\\{tabular\\}","\\\\end{tabularx}",indout,perl=TRUE)
+ indout<-sub("\\\\begin\\{tabular\\}\\[t\\]\\{llll\\}","\\\\begin{tabularx}{\\\\textwidth}{>{\\\\raggedright\\\\arraybackslash}p{2.8cm}>{\\\\raggedright\\\\arraybackslash}X >{\\\\raggedright\\\\arraybackslash}p{2.5cm} >{\\\\raggedright\\\\arraybackslash}X}",indout,perl=TRUE);indout<-sub("\\\\end\\{tabular\\}","\\\\end{tabularx}",indout,perl=TRUE)
  writeLines(indout,"articulo/tablas/indicadores.tex")
  vars<-intersect(c("modelo","n","chisq.scaled","df","pvalue.scaled","cfi.robust","tli.robust","rmsea.robust","rmsea.ci.lower.robust","rmsea.ci.upper.robust","srmr","cfi.scaled","tli.scaled","rmsea.scaled"),names(ajuste))
- ajuste_tex<-ajuste[,vars,drop=FALSE];if("pvalue.scaled"%in%names(ajuste_tex))ajuste_tex$pvalue.scaled[as.numeric(ajuste_tex$pvalue.scaled)<.001]<-"<,001"
+ ajuste_tex<-ajuste[,vars,drop=FALSE];if("pvalue.scaled"%in%names(ajuste_tex))ajuste_tex$pvalue.scaled[as.numeric(ajuste_tex$pvalue.scaled)<.001]<-"<0,001"
  if("modelo"%in%names(ajuste_tex))ajuste_tex$modelo<-unname(c(AFC_correlacionado="AFC",SEM_referencia="SEM principal",SEM_institucional_2D_exploratorio="Alternativo 2D",SEM_rival_inverso="Rival inverso",configural="Configural",umbrales="Umbrales",metrica_ordinal="Métrica")[ajuste_tex$modelo])
  names(ajuste_tex)<-c("Modelo","n","Chi2 esc.","gl","p","CFI rob.","TLI rob.","RMSEA rob.","IC inf.","IC sup.","SRMR","CFI esc.","TLI esc.","RMSEA esc.")[seq_along(ajuste_tex)]
- ajuste_tex_out<-knitr::kable(ajuste_tex,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,na="--",format.args=list(decimal.mark=",",big.mark="."),caption="Índices de ajuste de los modelos ponderados",label="ajuste")
- writeLines(c("\\begingroup\\scriptsize\\setlength{\\tabcolsep}{2pt}",resize_tabular(ajuste_tex_out),"\\endgroup"),"articulo/tablas/ajuste.tex")
- if(nrow(hip)){h<-data.frame(H=hip$hipotesis,Ruta=ifelse(hip$rhs=="ConfianzaInterpersonal","Interpersonal","Institucional"),B=hip$est,EE=hip$se,z=hip$z,beta=hip$std.all,p=hip$pvalue,IC_inf=hip$ci.lower,IC_sup=hip$ci.upper);h$p[as.numeric(h$p)<.001]<-"<,001";writeLines(knitr::kable(h,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,format.args=list(decimal.mark=",",big.mark="."),caption="Hipótesis y parámetros estructurales",label="hipotesis"),"articulo/tablas/hipotesis.tex")}
- sens<-leer("salidas/08_sensibilidad_pesos_faltantes.csv");if(nrow(sens)){s<-data.frame(Especificacion=unname(c(casos_completos_sin_pesos="CC sin pesos",casos_completos_FEX_P="CC con FEX_P",pares_FEX_P="Pares con FEX_P")[sens$especificacion]),Ruta=ifelse(sens$rhs=="ConfianzaInterpersonal","Interpersonal","Institucional"),B=sens$est,EE=sens$se,z=sens$z,p=sens$pvalue,beta=sens$std.all,IC_inf=sens$ci.lower,IC_sup=sens$ci.upper);s$p[as.numeric(s$p)<.001]<-"<,001";writeLines(resize_tabular(knitr::kable(s,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,format.args=list(decimal.mark=",",big.mark="."),caption="Sensibilidad a pesos y tratamiento de faltantes",label="sensibilidad")),"articulo/tablas/sensibilidad.tex")}
- de<-leer("salidas/08_sensibilidad_deff.csv");if(nrow(de)){d<-data.frame(Ruta=ifelse(de$ruta=="ConfianzaInterpersonal","Interpersonal","Institucional"),B=de$B,EE_original=de$EE_original,deff=de$deff_kish,EE_inflado=de$EE_inflado,z=de$z,p=de$p,IC_inf=de$IC95_inf,IC_sup=de$IC95_sup);d$p[d$p<.001]<-"<,001";writeLines(resize_tabular(knitr::kable(d,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,format.args=list(decimal.mark=",",big.mark="."),caption="Sensibilidad aproximada al efecto de diseño por desigualdad de pesos",label="deff")),"articulo/tablas/sensibilidad_deff.tex")}
- pa<-leer("salidas/08_parametros_afc.csv");ca<-pa[pa$op=="=~",c("lhs","rhs","std.all","se","z","pvalue"),drop=FALSE];if(nrow(ca)){ca$pvalue[as.numeric(ca$pvalue)<.001]<-"<,001";writeLines(knitr::kable(ca,format="latex",booktabs=TRUE,longtable=TRUE,digits=3,row.names=FALSE,format.args=list(decimal.mark=",",big.mark="."),caption="Cargas factoriales estandarizadas del AFC ponderado"),"articulo/tablas/cargas_estandarizadas.tex")}
+ robusta <- ajuste_tex[,c("Modelo","Chi2 esc.","gl","CFI rob.","TLI rob.","RMSEA rob.","SRMR")]
+ robusta$IC <- ifelse(is.na(ajuste$rmsea.ci.lower.robust),"--",paste0("[",formatC(ajuste$rmsea.ci.lower.robust,format="f",digits=3,decimal.mark=","),"; ",formatC(ajuste$rmsea.ci.upper.robust,format="f",digits=3,decimal.mark=","),"]"))
+ robusta <- robusta[,c(1:6,8,7)]
+ names(robusta)<-c("Modelo","Chi2 aj.","gl","CFI","TLI","RMSEA","IC 90%","SRMR")
+ escalada <- ajuste_tex[,c("Modelo","CFI esc.","TLI esc.","RMSEA esc.")]
+ panel_a<-knitr::kable(robusta,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,
+   format.args=list(decimal.mark=",",big.mark="."))
+ panel_b<-knitr::kable(escalada,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,
+   format.args=list(decimal.mark=",",big.mark="."))
+ writeLines(c("\\begin{table}[htbp]\\centering\\small",
+   "\\caption{Índices de ajuste de los modelos ponderados}\\label{tab:ajuste}",
+   "\\textit{Panel A. Índices robustos e intervalo del 90\\% para RMSEA}\\par\\smallskip",
+   resize_tabular(panel_a),"\\par\\medskip",
+   "\\textit{Panel B. Índices escalados}\\par\\smallskip",panel_b,
+   "\\par\\smallskip\\footnotesize $n=46\\,392$ en todos los modelos; $p<0{,}001$ para los estadísticos ajustados. Los guiones indican índices robustos no disponibles.",
+   "\\end{table}"),"articulo/tablas/ajuste.tex")
+ if(nrow(hip)){h<-data.frame(H=hip$hipotesis,Ruta=ifelse(hip$rhs=="ConfianzaInterpersonal","Interpersonal","Institucional"),B=hip$est,EE=hip$se,z=hip$z,beta=hip$std.all,p_unilateral=hip$p_unilateral_signo_positivo,IC_inf=hip$ci.lower,IC_sup=hip$ci.upper);h$p_unilateral[as.numeric(h$p_unilateral)<.001]<-"<0,001";writeLines(knitr::kable(h,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,format.args=list(decimal.mark=",",big.mark="."),caption="Hipótesis y parámetros estructurales",label="hipotesis"),"articulo/tablas/hipotesis.tex")}
+ sens<-leer("salidas/08_sensibilidad_pesos_faltantes.csv");if(nrow(sens)){s<-data.frame(Especificacion=unname(c(casos_completos_sin_pesos="CC sin pesos",casos_completos_FEX_P="CC con FEX_P",pares_FEX_P="Pares con FEX_P")[sens$especificacion]),Ruta=ifelse(sens$rhs=="ConfianzaInterpersonal","Interpersonal","Institucional"),B=sens$est,EE=sens$se,z=sens$z,p=sens$pvalue,beta=sens$std.all,IC_inf=sens$ci.lower,IC_sup=sens$ci.upper);s$p[as.numeric(s$p)<.001]<-"<0,001";writeLines(resize_tabular(knitr::kable(s,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,format.args=list(decimal.mark=",",big.mark="."),caption="Sensibilidad a pesos y tratamiento de faltantes",label="sensibilidad")),"articulo/tablas/sensibilidad.tex")}
+ de<-leer("salidas/08_sensibilidad_deff.csv");if(nrow(de)){d<-data.frame(Ruta=ifelse(de$ruta=="ConfianzaInterpersonal","Interpersonal","Institucional"),B=de$B,EE_original=de$EE_original,k=de$deff_kish,EE_hipotetico=de$EE_inflado,z=de$z,p=de$p,IC_inf=de$IC95_inf,IC_sup=de$IC95_sup);d$p[d$p<.001]<-"<0,001";writeLines(resize_tabular(knitr::kable(d,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,format.args=list(decimal.mark=",",big.mark="."),caption="Escenario hipotético de inflación adicional de errores estándar",label="deff")),"articulo/tablas/sensibilidad_deff.tex")}
+ pa<-leer("salidas/08_cargas_afc_estandarizadas.csv");ca<-pa[pa$op=="=~",c("lhs","rhs","est.std","se","z","pvalue","ci.lower","ci.upper"),drop=FALSE];if(nrow(ca)){ca$lhs<-unname(c(ConfianzaInterpersonal="Interpersonal",ConfianzaInstitucional="Institucional",ConocimientoMecanismos="Familiaridad")[ca$lhs]);names(ca)<-c("Factor","Indicador","Carga est.","EE est.","z","p","IC inf.","IC sup.");ca$p[as.numeric(ca$p)<.001]<-"<0,001";writeLines(knitr::kable(ca,format="latex",booktabs=TRUE,longtable=TRUE,digits=3,row.names=FALSE,format.args=list(decimal.mark=",",big.mark="."),caption="Cargas factoriales estandarizadas del AFC ponderado"),"articulo/tablas/cargas_estandarizadas.tex")}
  if(file.exists("salidas/08_fornell_larcker.csv")&&file.exists("salidas/08_HTMT.csv")){
    fl<-utils::read.csv("salidas/08_fornell_larcker.csv",row.names=1,check.names=FALSE);ht<-utils::read.csv("salidas/08_HTMT.csv",row.names=1,check.names=FALSE)
    cr0<-utils::read.csv("salidas/08_confiabilidad.csv",row.names=1,check.names=FALSE);av0<-utils::read.csv("salidas/08_AVE.csv",row.names=1,check.names=FALSE)
    con<-rownames(fl);av<-as.numeric(av0[con,1]);val<-data.frame(constructo=con,CR=as.numeric(cr0[1,con]),AVE=av,raiz_AVE=sqrt(av),correlacion_latente_maxima=vapply(con,function(x)max(abs(fl[x,setdiff(colnames(fl),x)])),numeric(1)),HTMT_maximo_no_ponderado=vapply(con,function(x)max(abs(ht[x,setdiff(colnames(ht),x)])),numeric(1)))
-   names(val)<-c("Constructo","CR","AVE","Raíz AVE","Cor. lat. máx.","HTMT máx. no pond.")
+   val$constructo<-unname(c(ConfianzaInterpersonal="Interpersonal",ConfianzaInstitucional="Institucional",ConocimientoMecanismos="Familiaridad")[val$constructo]);names(val)<-c("Constructo","CR","AVE","Raíz AVE","Cor. lat. máx.","HTMT máx. no pond.")
    writeLines(resize_tabular(knitr::kable(val,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,format.args=list(decimal.mark=",",big.mark="."),caption="Confiabilidad, AVE y validez discriminante",label="validez")),"articulo/tablas/validez.tex")
    dis<-data.frame(Constructo=c("Interpersonal","Institucional","Familiaridad"),fl,ht[,rownames(fl)],check.names=FALSE)
    names(dis)<-c("Constructo","FL-IP","FL-Inst.","FL-Fam.","HTMT-IP","HTMT-Inst.","HTMT-Fam.")
@@ -90,19 +118,86 @@ if(requireNamespace("knitr",quietly=TRUE)){
  if(file.exists("salidas/08_invarianza_diferencias_chi2.csv")&&file.exists("salidas/08_invarianza_cambios_ajuste.csv")){
    di<-utils::read.csv("salidas/08_invarianza_diferencias_chi2.csv",row.names=1,check.names=FALSE);ca<-leer("salidas/08_invarianza_cambios_ajuste.csv");iv0<-leer("salidas/08_invarianza_sexo.csv")
    iv<-data.frame(Modelo=iv0$modelo,Chi2_escalado=iv0$chisq.scaled,gl=iv0$df,CFI_escalado=iv0$cfi.scaled,TLI_escalado=iv0$tli.scaled,RMSEA_escalado=iv0$rmsea.scaled,SRMR=iv0$srmr,Delta_chi2=c(NA,di[2:3,"Chisq diff"]),Delta_gl=c(NA,di[2:3,"Df diff"]),p=c(NA,di[2:3,"Pr(>Chisq)"]),Delta_CFI=c(NA,ca$delta_CFI),Delta_RMSEA=c(NA,ca$delta_RMSEA),Delta_SRMR=c(NA,ca$delta_SRMR))
-   iv$Chi2_escalado<-formatC(iv$Chi2_escalado,format="f",digits=2,big.mark=".",decimal.mark=",");iv$Delta_chi2<-ifelse(is.na(iv$Delta_chi2),"--",formatC(iv$Delta_chi2,format="f",digits=2,decimal.mark=","));iv$Delta_gl[is.na(iv$Delta_gl)]<-"--";iv$p<-ifelse(is.na(iv$p),"--",ifelse(iv$p<.001,"<,001",formatC(iv$p,format="f",digits=3,decimal.mark=",")))
+   iv$Chi2_escalado<-formatC(iv$Chi2_escalado,format="f",digits=2,big.mark=".",decimal.mark=",");iv$Delta_chi2<-ifelse(is.na(iv$Delta_chi2),"--",formatC(iv$Delta_chi2,format="f",digits=2,decimal.mark=","));iv$Delta_gl[is.na(iv$Delta_gl)]<-"--";iv$p<-ifelse(is.na(iv$p),"--",ifelse(iv$p<.001,"<0,001",formatC(iv$p,format="f",digits=3,decimal.mark=",")))
    for(nm in c("Delta_CFI","Delta_RMSEA","Delta_SRMR"))iv[[nm]]<-ifelse(is.na(iv[[nm]]),"--",formatC(iv[[nm]],format="f",digits=4,decimal.mark=","))
    names(iv)<-c("Modelo","Chi2 escalado","gl","CFI esc.","TLI esc.","RMSEA esc.","SRMR","Delta Chi2","Delta gl","p","Delta CFI","Delta RMSEA","Delta SRMR")
-   ivout<-knitr::kable(iv,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,caption="Secuencia de invariancia ordinal y cambios de ajuste por sexo",label="invarianza")
-   writeLines(c("\\begingroup\\scriptsize\\setlength{\\tabcolsep}{2pt}",resize_tabular(ivout),"\\endgroup"),"articulo/tablas/invarianza.tex")
+   cambios_tabla <- iv[2:3,c(1,8:13)]
+   cambios_tabla[[1]]<-c("Umbrales","Cargas y umbrales")
+   names(cambios_tabla)<-c("Restricción añadida","Delta Chi2","Delta gl","p","Delta CFI","Delta RMSEA","Delta SRMR")
+   ivout<-knitr::kable(cambios_tabla,format="latex",booktabs=TRUE,row.names=FALSE,
+     caption="Pruebas de diferencia y cambios de ajuste entre niveles de invariancia",label="invarianza")
+   writeLines(resize_tabular(ivout),"articulo/tablas/invarianza.tex")
  }
  wa<-leer("salidas/08_invarianza_wald_rutas.csv");if(nrow(wa)){w<-data.frame(Hipotesis=wa$hipotesis,Wald=wa$stat,gl=wa$df,p=wa$p.value,p_Bonferroni=wa$p_bonferroni,p_Holm=wa$p_holm);writeLines(knitr::kable(w,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,format.args=list(decimal.mark=",",big.mark="."),caption="Pruebas de Wald por ruta con ajuste por comparaciones múltiples",label="waldsexo"),"articulo/tablas/wald_sexo.tex")}
+ # Sensibilidades nuevas: se generan siempre en el flujo vigente.
+ ter<-leer("salidas/08_sensibilidad_territorial.csv")
+ ter_fit<-leer("salidas/08_ajuste_territorial.csv")
+ decimal <- function(x) formatC(x, format="f", digits=3, decimal.mark=",")
+ principal <- hip$std.all[match(ter$rhs, hip$rhs)]
+ cambios <- abs(ter$std.all-principal)
+ writeLines(paste0("Las estimaciones estandarizadas fueron ",
+   paste(decimal(ter$std.all),collapse=" y "), "; la mayor diferencia absoluta respecto del modelo principal fue ",
+   decimal(max(cambios)), ". El factor endógeno tuvo $R^2=",decimal(ter$R2[1]),
+   "$. El ajuste robusto continuó débil (CFI=",decimal(ter_fit$cfi.robust),
+   "; RMSEA=",decimal(ter_fit$rmsea.robust),
+   "). La comparación informa el alcance de la no aplicabilidad territorial sin resolver la ausencia de respuesta restante ni el ajuste del diseño."),
+   "articulo/tablas/interpretacion_territorial.tex")
+ tt<-data.frame(Ruta=ifelse(ter$rhs=="ConfianzaInterpersonal","Interpersonal","Institucional"),
+   B=ter$est,EE=ter$se,beta=ter$std.all,IC_inf=ter$ci.lower,IC_sup=ter$ci.upper)
+ writeLines(knitr::kable(tt,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,
+   format.args=list(decimal.mark=",",big.mark="."),caption="Sensibilidad sin Asamblea ni Gobernación: 23 indicadores",label="territorial"),
+   "articulo/tablas/sensibilidad_territorial.tex")
+ rv<-leer("salidas/08_revision_medicion.csv")
+ if (!all(rv$admisible)) stop("La revisión de medición contiene una solución no admisible.")
+ vi <- rv[rv$particion=="validacion_interna",]
+ v0 <- vi[vi$especificacion=="referencia",];v1 <- vi[vi$especificacion!="referencia",]
+ rutas_rv <- leer("salidas/08_revision_medicion_rutas.csv")
+ rango_ip <- range(rutas_rv$std.all[rutas_rv$rhs=="ConfianzaInterpersonal"])
+ rango_inst <- range(rutas_rv$std.all[rutas_rv$rhs=="ConfianzaInstitucional"])
+ writeLines(paste0("En la validación interna, el CFI robusto pasó de ",decimal(v0$cfi.robust),
+   " a ",decimal(v1$cfi.robust)," y el RMSEA robusto de ",decimal(v0$rmsea.robust),
+   " a ",decimal(v1$rmsea.robust),". Las soluciones de ambas particiones fueron admisibles. ",
+   "Las rutas estandarizadas permanecieron positivas: entre ",paste(decimal(rango_ip),collapse=" y "),
+   " para confianza interpersonal y entre ",paste(decimal(rango_inst),collapse=" y "),
+   " para confianza institucional. La mejora parcial no elimina las reservas sobre la medición. ",
+   "El análisis informa una revisión localizada de la medición, no una selección confirmatoria del modelo final; se conserva la especificación original como referencia y se requiere replicación externa."),
+   "articulo/tablas/interpretacion_revision.tex")
+ rv$particion<-ifelse(rv$particion=="calibracion","Calibración","Validación interna")
+ rv$especificacion<-ifelse(rv$especificacion=="referencia","Referencia","Residual vecinos-amistades")
+ rv<-rv[,c("particion","especificacion","n","cfi.robust","tli.robust","rmsea.robust","srmr")]
+ names(rv)<-c("Partición","Modelo","n","CFI rob.","TLI rob.","RMSEA rob.","SRMR")
+ writeLines(resize_tabular(knitr::kable(rv,format="latex",booktabs=TRUE,digits=3,row.names=FALSE,
+   format.args=list(decimal.mark=",",big.mark="."),caption="Revisión exploratoria de dependencia local en dos submuestras",label="revision")),
+   "articulo/tablas/revision_medicion.tex")
+
 }
+# Repite la cabecera cuando las tablas del apéndice continúan en otra página.
+for (f in c("cargas_estandarizadas.tex","estadisticos_descriptivos.tex","matriz_policorica.tex")) {
+  ruta <- file.path("articulo/tablas",f)
+  z <- readLines(ruta,warn=FALSE)
+  top <- which(grepl("^\\\\toprule",z))[1]
+  mid <- which(grepl("^\\\\midrule",z))[1]
+  if (!is.na(top) && !is.na(mid)) {
+    z <- append(z,c("\\endfirsthead","\\toprule",z[(top+1):mid],"\\endhead"),after=mid)
+    writeLines(z,ruta)
+  }
+}
+
 if (!requireNamespace("writexl",quietly=TRUE))
   stop("Falta writexl. Instálelo una vez con install.packages('writexl') y vuelva a ejecutar.")
 salida<-"outputs/Taller2_SEM_resultados.xlsx";dir.create("outputs",showWarnings=FALSE,recursive=TRUE)
-writexl::write_xlsx(list(ajuste=ajuste,medicion=unir(list(medicion,cr,ave),c("cargas","CR","AVE")),
+rv_fit <- leer("salidas/08_revision_medicion.csv")
+rv_fit$modelo <- paste(rv_fit$particion,rv_fit$especificacion,sep=" / ")
+rv_fit$convergio <- rv_fit$admisible
+ajuste_libro <- unir(list(ajuste,leer("salidas/08_ajuste_territorial.csv"),rv_fit),
+  c("modelos_principales_e_invariancia","sensibilidad_territorial","revision_exploratoria"))
+writexl::write_xlsx(list(ajuste=ajuste_libro,medicion=unir(list(medicion,cr,ave),c("cargas","CR","AVE")),
   discriminante=discriminante,hipotesis=hip,efectos=efectos,
-  invarianza=unir(inv,c("secuencia","cambios","diferencias","Wald"))),path=salida)
+  invarianza=unir(inv,c("secuencia","cambios","diferencias","Wald")),
+  territorial=leer("salidas/08_sensibilidad_territorial.csv"),
+  revision_medicion=leer("salidas/08_revision_medicion.csv"),
+  tamanos_efecto=leer("salidas/08_tamanos_efecto.csv")),path=salida)
 cat("Libro generado en ",salida,"\n",sep="")
+source("04_diagrama_articulo.R", local = TRUE, encoding = "UTF-8")
+source("04_fuentes_tablas.R", local = TRUE, encoding = "UTF-8")
 sessionInfo()

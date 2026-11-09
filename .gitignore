@@ -20,3 +20,4 @@ articulo/*.log
 articulo/*.out
 articulo/*.bbl
 articulo/*.blg
+tmp/

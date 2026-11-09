@@ -1,0 +1,243 @@
+%% ============================================================================
+%% Plantilla de artículo académico - Proyectos aplicados
+%% Universidad Santo Tomás - Facultad de Estadística
+%% Cursos: Teoría de Respuesta al Ítem, Modelación de Ecuaciones Estructurales y
+%%         Muestreo Avanzado
+%%
+%% Compilación:  pdflatex articulo -> bibtex articulo -> pdflatex -> pdflatex
+%% Las referencias se escriben en el archivo referencias.bib. Si ese archivo no existe,
+%% la plantilla lo crea con algunos ejemplos (entorno filecontents del preámbulo); si ya
+%% existe, no lo sobrescribe. Edite referencias.bib directamente.
+%%
+%% Los textos en gris son instrucciones: reemplácelos por el contenido del artículo y
+%% elimine el comando \guia cuando termine.
+%% ============================================================================
+\documentclass[11pt,letterpaper]{article}
+
+%% ---------- Paquetes --------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{graphicx}
+\usepackage{booktabs,tabularx,array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{authblk}
+\usepackage{setspace}
+\usepackage{tikz}
+\usepackage[authoryear,round]{natbib}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=MidnightBlue,citecolor=MidnightBlue,
+            urlcolor=MidnightBlue]{hyperref}
+
+\onehalfspacing
+\setlength{\emergencystretch}{3em}
+\graphicspath{{figuras/}}
+
+%% Texto de instrucciones (bórrelo al terminar)
+\newcommand{\guia}[1]{{\color{gray}\itshape #1}}
+
+%% Palabras clave
+\newcommand{\palabrasclave}[1]{\par\medskip\noindent\textbf{Palabras clave:} #1}
+\newcommand{\keywords}[1]{\par\medskip\noindent\textbf{Keywords:} #1}
+
+%% ---------- Bibliografía de ejemplo ----------------------------------------
+\begin{filecontents*}{referencias.bib}
+@book{rcore2025,
+  author    = {{R Core Team}},
+  title     = {R: A Language and Environment for Statistical Computing},
+  publisher = {R Foundation for Statistical Computing},
+  address   = {Viena},
+  year      = {2025},
+  url       = {https://www.R-project.org/}
+}
+@misc{dane2018cnpv,
+  author       = {{Departamento Administrativo Nacional de Estadística (DANE)}},
+  title        = {Censo Nacional de Población y Vivienda 2018: microdatos anonimizados},
+  year         = {2019},
+  howpublished = {Archivo Nacional de Datos. \url{https://microdatos.dane.gov.co/index.php/catalog/643}},
+  note         = {Consultado el 31 de octubre de 2026}
+}
+@book{deayala2022,
+  author    = {de Ayala, R. J.},
+  title     = {The Theory and Practice of Item Response Theory},
+  edition   = {2},
+  publisher = {Guilford Press},
+  address   = {Nueva York},
+  year      = {2022}
+}
+@article{rosseel2012,
+  author  = {Rosseel, Yves},
+  title   = {lavaan: An {R} Package for Structural Equation Modeling},
+  journal = {Journal of Statistical Software},
+  year    = {2012},
+  volume  = {48},
+  number  = {2},
+  pages   = {1--36}
+}
+@book{sarndal1992,
+  author    = {Särndal, Carl-Erik and Swensson, Bengt and Wretman, Jan},
+  title     = {Model Assisted Survey Sampling},
+  publisher = {Springer},
+  address   = {Nueva York},
+  year      = {1992}
+}
+\end{filecontents*}
+
+%% ---------- Título y autores -------------------------------------------------
+\title{\textbf{Título informativo del artículo: constructo o población, datos y método}}
+
+\author[1]{Nombre Apellido}
+\author[1]{Nombre Apellido}
+\author[1]{Nombre Apellido}
+\affil[1]{Facultad de Estadística, Universidad Santo Tomás, Bogotá, Colombia}
+\date{Curso: \underline{\hspace{5cm}} \quad Fecha: \today}
+
+%% ============================================================================
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent\guia{Resumen estructurado de 150 a 250 palabras, en un solo párrafo, sin citas ni
+fórmulas. Responda en este orden: (1) objetivo; (2) datos: fuente, población y tamaño;
+(3) métodos principales; (4) resultados con las cifras más importantes; (5) conclusión e
+implicación.}
+\palabrasclave{\guia{tres a cinco términos, separados por punto y coma}}
+\end{abstract}
+
+\renewcommand{\abstractname}{Abstract}
+\begin{abstract}
+\noindent\guia{English version of the abstract.}
+\keywords{\guia{three to five terms}}
+\end{abstract}
+
+%% ----------------------------------------------------------------------------
+\section{Introducción}
+\label{sec:introduccion}
+
+\guia{Uno a dos páginas. Presente el problema y su relevancia en el contexto colombiano;
+resuma lo que se sabe (con citas) y el vacío que aborda el estudio; cierre con el objetivo
+o las preguntas de investigación y una frase que describa la organización del artículo.}
+
+Ejemplo de cita en el texto: el análisis se realizó en R \citep{rcore2025}, con datos del
+\citet{dane2018cnpv}.
+
+%% ----------------------------------------------------------------------------
+\section{Marco teórico}
+\label{sec:marco}
+
+\guia{Presente los conceptos y modelos estadísticos que usa el estudio, con las ecuaciones
+necesarias y sus referencias. En SEM, incluya aquí los antecedentes de cada relación y las
+hipótesis numeradas. No copie definiciones de libro de texto que el lector no necesita.}
+
+Las ecuaciones se numeran y se citan en el texto, como la ecuación~\eqref{eq:ejemplo}:
+\begin{equation}
+P(X_{ij}=1\mid\theta_i)=\frac{\exp\{a_j(\theta_i-b_j)\}}{1+\exp\{a_j(\theta_i-b_j)\}} .
+\label{eq:ejemplo}
+\end{equation}
+
+%% ----------------------------------------------------------------------------
+\section{Datos}
+\label{sec:datos}
+
+\guia{Fuente (entidad, operación, año, URL), población y unidades, variables o ítems usados
+(tabla), procesamiento y síntesis de la calidad de los datos obtenida en la Fase~1.}
+
+\begin{table}[ht]
+\centering
+\caption{Ejemplo de tabla: variables o ítems utilizados.}
+\label{tab:variables}
+\small
+\begin{tabularx}{\textwidth}{@{}lXl@{}}
+\toprule
+\textbf{Código} & \textbf{Descripción o enunciado} & \textbf{Escala} \\
+\midrule
+x1 & Descripción de la variable o enunciado del ítem & Ordinal (1--5) \\
+x2 & Descripción de la variable o enunciado del ítem & Dicotómica (0/1) \\
+\bottomrule
+\end{tabularx}
+
+\smallskip
+\parbox{\textwidth}{\footnotesize\textit{Fuente:} elaboración propia con datos de
+\citet{dane2018cnpv}.}
+\end{table}
+
+%% ----------------------------------------------------------------------------
+\section{Métodos}
+\label{sec:metodos}
+
+\guia{Describa lo que se hizo con detalle suficiente para que otro estadístico pueda
+repetirlo: modelos o diseños, estimación, criterios de decisión (con sus referencias),
+tratamiento de faltantes y del diseño muestral, y software con versiones (R y paquetes).}
+
+%% ----------------------------------------------------------------------------
+\section{Resultados}
+\label{sec:resultados}
+
+\guia{Presente los resultados en el orden de los métodos, con tablas y figuras comentadas en
+el texto. Reporte estimaciones con su incertidumbre (error estándar o intervalo). Deje la
+interpretación amplia para la discusión.}
+
+\begin{figure}[ht]
+\centering
+%% Reemplace el recuadro por la figura generada en R, por ejemplo:
+%% \includegraphics[width=0.75\textwidth]{curva_informacion.pdf}
+\begin{tikzpicture}
+\draw[gray,dashed] (0,0) rectangle (10,4.5);
+\node[gray,align=center] at (5,2.25) {Inserte aquí la figura con\\
+\texttt{\textbackslash includegraphics\{archivo.pdf\}}};
+\end{tikzpicture}
+\caption{Título descriptivo de la figura.}
+\label{fig:ejemplo}
+
+\smallskip
+\parbox{\textwidth}{\centering\footnotesize\textit{Fuente:} elaboración propia.}
+\end{figure}
+
+La Figura~\ref{fig:ejemplo} y la Tabla~\ref{tab:variables} se citan con \texttt{\textbackslash
+ref}.
+
+%% ----------------------------------------------------------------------------
+\section{Discusión}
+\label{sec:discusion}
+
+\guia{Interprete los resultados a la luz de las preguntas y de la literatura; señale las
+implicaciones prácticas y las limitaciones (datos, diseño, supuestos del modelo); proponga
+trabajo futuro.}
+
+%% ----------------------------------------------------------------------------
+\section{Conclusiones}
+\label{sec:conclusiones}
+
+\guia{Uno o dos párrafos que respondan directamente el objetivo, sin repetir cifras ya
+discutidas ni introducir resultados nuevos.}
+
+%% ----------------------------------------------------------------------------
+\section*{Disponibilidad de datos y código}
+
+\guia{Indique la fuente y la URL de los datos y dónde se encuentran los scripts de R que
+reproducen todos los resultados (por ejemplo, el archivo comprimido entregado o un
+repositorio).}
+
+%% ----------------------------------------------------------------------------
+%% Referencias que no se citan en el texto pero deben aparecer (opcional):
+\nocite{deayala2022,rosseel2012,sarndal1992}
+
+\bibliographystyle{apalike}
+\bibliography{referencias}
+
+%% ----------------------------------------------------------------------------
+\appendix
+\section{Material complementario}
+\label{app:complementario}
+
+\guia{Tablas extensas, resultados complementarios y sintaxis del modelo.}
+
+\end{document}

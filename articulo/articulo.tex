@@ -1,56 +1,76 @@
-\documentclass[12pt,letterpaper,oneside]{article}
+% Artículo adaptado de Plantilla_Articulo_USTA.tex, suministrada por el docente.
+% Se conservan los resultados y las referencias del estudio; se retiran ejemplos y guías.
+\documentclass[11pt,letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\babelprovide[import]{english}
 \usepackage{lmodern}
+\usepackage{microtype}
 \usepackage[margin=2.5cm]{geometry}
-\usepackage{amsmath,amssymb}
-\usepackage{booktabs,tabularx,longtable,array}
-\usepackage{graphicx,rotating,lscape,float}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{graphicx}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{authblk}
+\usepackage{setspace}
+\usepackage{tikz}
 \usepackage[authoryear,round]{natbib}
-\usepackage[hidelinks]{hyperref}
-\usepackage{caption}
-\usepackage{xcolor}
-\linespread{1.25}
-\setlength{\parindent}{1.25cm}
-\setlength{\parskip}{0pt}
-\captionsetup{font=small,labelfont=bf}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=MidnightBlue,citecolor=MidnightBlue,
+            urlcolor=MidnightBlue]{hyperref}
+% Paquetes adicionales para los apéndices y las figuras del estudio.
+\usepackage{float,lscape}
+\onehalfspacing
+\setlength{\emergencystretch}{3em}
+\graphicspath{{figuras/}}
+\clubpenalty=10000
+\widowpenalty=10000
 \renewcommand{\arraystretch}{1.15}
-\newcommand{\pval}[1]{\textit{p}~#1}
-\newcommand{\NA}{\textit{n.a.}}
+\newcommand{\palabrasclave}[1]{\par\medskip\noindent\textbf{Palabras clave:} #1}
+\newcommand{\keywords}[1]{\par\medskip\noindent\textbf{Keywords:} #1}
 
-\title{Confianza interpersonal, confianza institucional y familiaridad con mecanismos de participación ciudadana: un modelo de ecuaciones estructurales con la ECP 2023}
-\author{Juan David Roa Castañeda\\Gabriel Felipe Aldana Vargas\\Laura Camila Rodríguez Granados\\[4pt]\small Facultad de Estadística, Universidad Santo Tomás}
-\date{Modelación de Ecuaciones Estructurales --- 2026-II}
+\title{\textbf{Confianza interpersonal, confianza institucional y familiaridad con mecanismos de participación ciudadana: un modelo de ecuaciones estructurales con la ECP 2023}}
+\author[1]{Juan David Roa Castañeda}
+\author[1]{Gabriel Felipe Aldana Vargas}
+\author[1]{Laura Camila Rodríguez Granados}
+\affil[1]{Facultad de Estadística, Universidad Santo Tomás, Bogotá, Colombia}
+\date{Curso: Modelación de Ecuaciones Estructurales\\Fecha: 9 de noviembre de 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-\noindent\textbf{Objetivo:} Estimar la asociación entre la confianza interpersonal, la confianza institucional y la familiaridad autorreportada con mecanismos de participación ciudadana en personas encuestadas en Colombia en 2023. \textbf{Datos y método:} Se integraron cinco módulos de la Encuesta de Cultura Política (ECP) 2023 del DANE mediante cuatro claves individuales; la intersección fue de 46.392 personas. Se estimó un modelo de tres factores con indicadores ordinales y binarios mediante WLSMV, faltantes por pares y ponderación por el factor de expansión \texttt{FEX\_P}. Se evaluó el ajuste global y local, la confiabilidad, la validez y la invariancia ordinal por sexo. \textbf{Resultados:} El ajuste robusto fue débil (CFI=0{,}900; TLI=0{,}890; RMSEA=0{,}092; SRMR=0{,}040), aunque los índices escalados fueron más favorables (CFI=0{,}981; RMSEA=0{,}046). Las rutas hacia familiaridad fueron positivas y pequeñas (\(\beta=0{,}094\) y \(\beta=0{,}065\)); el modelo explicó 1,6\% de su varianza. La asociación institucional fue mayor entre hombres en la comparación multigrupo, mientras que la interpersonal no difirió estadísticamente por sexo. \textbf{Conclusión:} Los datos sugieren asociaciones modestas, pero el ajuste de medición y la varianza no ajustada al diseño limitan la inferencia. Los resultados se consideran exploratorios, no causales ni plenamente representativos en términos de incertidumbre.
+\noindent\textbf{Objetivo:} Estimar la asociación entre la confianza interpersonal, la confianza institucional y la familiaridad autorreportada con mecanismos de participación ciudadana en personas encuestadas en Colombia en 2023. \textbf{Datos y método:} Se integraron cinco módulos de la Encuesta de Cultura Política (ECP) 2023 del DANE mediante cuatro claves individuales; la intersección fue de 46.392 personas. Se estimó un modelo de tres factores con indicadores ordinales y binarios mediante WLSMV, faltantes por pares y ponderación por el factor de expansión \texttt{FEX\_P}. Se evaluó el ajuste global y local, la confiabilidad, la validez y la invariancia ordinal por sexo. \textbf{Resultados:} El ajuste robusto fue débil (CFI=0{,}900; TLI=0{,}890; RMSEA=0{,}092; SRMR=0{,}040), aunque los índices escalados fueron más favorables (CFI=0{,}981; RMSEA=0{,}046). Las rutas hacia familiaridad fueron positivas y pequeñas (coeficientes estandarizados de 0{,}094 y 0{,}065); el modelo explicó 1,6\% de su varianza. La estimación institucional fue mayor en hombres, pero su diferencia no conservó significación tras ajustar las dos pruebas por ruta (Holm: p=0{,}067). \textbf{Conclusión:} Los datos sugieren asociaciones modestas, pero el ajuste de medición y la varianza no ajustada al diseño limitan la inferencia. Los resultados se consideran exploratorios, no causales ni plenamente representativos en términos de incertidumbre.
 
-\medskip\noindent\textbf{Palabras clave:} confianza interpersonal; confianza institucional; participación ciudadana; ecuaciones estructurales; Colombia.
+\palabrasclave{confianza interpersonal; confianza institucional; participación ciudadana; ecuaciones estructurales; Colombia.}
 \end{abstract}
 
+\clearpage
 \selectlanguage{english}
 \begin{abstract}
-\noindent\textbf{Objective:} To estimate the association of interpersonal trust and institutional trust with self-reported familiarity with citizen participation mechanisms among people surveyed in Colombia in 2023. \textbf{Data and method:} Five modules of the 2023 Political Culture Survey (ECP) produced by DANE were linked using four individual identifiers, yielding an intersection of 46,392 people. A three-factor model with ordinal and binary indicators was estimated using WLSMV, pairwise available data, and the \texttt{FEX\_P} expansion weight. Global and local fit, reliability, validity, and ordinal measurement invariance by sex were examined. \textbf{Results:} Robust fit was weak (CFI=0{,}900; TLI=0{,}890; RMSEA=0{,}092; SRMR=0{,}040), whereas scaled indices were more favorable (CFI=0{,}981; RMSEA=0{,}046). Both paths to familiarity were positive and small (\(\beta=0{,}094\) and \(\beta=0{,}065\)); the model explained 1.6\% of the outcome variance. The institutional trust association was larger among men in the multigroup comparison, while the interpersonal trust association did not differ statistically by sex. \textbf{Conclusion:} The data suggest modest associations, but measurement fit and variance estimates that do not account for the full survey design limit inference. Findings are exploratory, noncausal, and not fully design-adjusted for uncertainty.
+\noindent\textbf{Objective:} To estimate the association of interpersonal trust and institutional trust with self-reported familiarity with citizen participation mechanisms among people surveyed in Colombia in 2023. \textbf{Data and method:} Five modules of the 2023 Political Culture Survey (ECP) produced by DANE were linked using four individual identifiers, yielding an intersection of 46,392 people. A three-factor model with ordinal and binary indicators was estimated using WLSMV, pairwise available data, and the \texttt{FEX\_P} expansion weight. Global and local fit, reliability, validity, and ordinal measurement invariance by sex were examined. \textbf{Results:} Robust fit was weak (CFI=0.900; TLI=0.890; RMSEA=0.092; SRMR=0.040), whereas scaled indices were more favorable (CFI=0.981; RMSEA=0.046). Both paths to familiarity were positive and small (standardized coefficients of 0.094 and 0.065); the model explained 1.6\% of the outcome variance. The institutional trust estimate was larger among men, but its difference was not significant after adjusting the two path-specific tests (Holm: p=0.067). \textbf{Conclusion:} The data suggest modest associations, but measurement fit and variance estimates that do not account for the full survey design limit inference. Findings are exploratory, noncausal, and not fully design-adjusted for uncertainty.
 
-\medskip\noindent\textbf{Keywords:} interpersonal trust; institutional trust; citizen participation; structural equation modeling; Colombia.
+\keywords{interpersonal trust; institutional trust; citizen participation; structural equation modeling; Colombia.}
 \end{abstract}
 \selectlanguage{spanish}
 
 \section{Introducción}
+\label{sec:introduccion}
 
-La participación ciudadana requiere que las personas reconozcan canales mediante los cuales pueden intervenir en asuntos públicos, pero el reconocimiento de esos mecanismos no equivale por sí mismo a utilizarlos ni a comprender sus procedimientos. La Encuesta de Cultura Política (ECP) del Departamento Administrativo Nacional de Estadística (DANE) mide, entre otros dominios, la confianza declarada en personas e instituciones y si las personas conocen o han oído hablar de mecanismos de participación. La ronda de 2023 se recolectó entre septiembre y diciembre y sus resultados oficiales se expanden a la población civil no institucional de 18 años o más de los dominios cubiertos por la operación \citep{DANE2024Boletin,DANEECP2023}.
+La participación ciudadana requiere que las personas reconozcan canales mediante los cuales pueden intervenir en asuntos públicos, pero el reconocimiento de esos mecanismos no equivale por sí mismo a utilizarlos ni a comprender sus procedimientos. La Encuesta de Cultura Política (ECP) del Departamento Administrativo Nacional de Estadística (DANE) mide, entre otros dominios, la confianza declarada en personas e instituciones y si las personas conocen o han oído hablar de mecanismos de participación. La ronda de 2023 se recolectó entre octubre y diciembre y sus resultados oficiales se expanden a la población civil no institucional de 18 años o más de los dominios cubiertos por la operación \citep{DANE2024Boletin,DANEECP2023}.
 
 La confianza se ha vinculado a la cooperación cívica, la acción colectiva y las orientaciones frente al sistema político. Sin embargo, la confianza interpersonal y la confianza institucional son conceptos distintos: la primera se refiere a expectativas hacia otras personas, mientras que la segunda expresa una evaluación de actores e instituciones públicas \citep{LeviStoker2000,DelheyNewton2005}. Asimismo, las asociaciones entre confianza y participación pueden ser recíprocas, estar condicionadas por experiencias previas o reflejar selección, lo cual impide dar una interpretación causal a datos transversales \citep{vanIngenBekkers2015,Devine2024}.
 
-Este trabajo analiza si los niveles más altos de confianza interpersonal y confianza institucional se asocian con mayor familiaridad declarada con seis mecanismos formales: revocatoria del mandato, iniciativa popular, referendo, plebiscito, consulta popular y cabildo abierto. El análisis continúa la propuesta aprobada para el Taller 1 y aplica el enfoque de dos pasos que recomienda evaluar primero el modelo de medición y, luego, el modelo estructural \citep{AndersonGerbing1988}. La pregunta es: ¿cómo se asocian la confianza interpersonal y la confianza institucional con la familiaridad autorreportada con mecanismos de participación ciudadana entre personas encuestadas en Colombia en 2023?
+Este trabajo analiza si los niveles más altos de confianza interpersonal y confianza institucional se asocian con mayor familiaridad declarada con seis mecanismos formales: revocatoria del mandato, iniciativa popular, referendo, plebiscito, consulta popular y cabildo abierto. El análisis aplica el enfoque de dos pasos que recomienda evaluar primero el modelo de medición y, luego, el modelo estructural \citep{AndersonGerbing1988}. La pregunta es: ¿cómo se asocian la confianza interpersonal y la confianza institucional con la familiaridad autorreportada con mecanismos de participación ciudadana entre personas encuestadas en Colombia en 2023?
 
-El aporte empírico consiste en integrar módulos temáticos de la ECP, incorporar el factor oficial de expansión y evaluar diferencias entre hombres y mujeres con un modelo ordinal multigrupo. El estudio también hace explícita una limitación relevante para cualquier lectura poblacional: aunque se identificó el factor de expansión, los microdatos anonimizados disponibles no contienen los identificadores de estratos ni de las unidades de muestreo requeridos para reproducir plenamente la varianza del diseño. Se reporta, por tanto, un análisis ponderado de carácter exploratorio y se separa la magnitud de asociación de la significación estadística.
+El aporte empírico consiste en integrar módulos temáticos de la ECP, incorporar el factor oficial de expansión y evaluar diferencias entre hombres y mujeres con un modelo ordinal multigrupo. El estudio también hace explícita una limitación relevante para cualquier lectura poblacional: aunque se identificó el factor de expansión, los microdatos anonimizados disponibles no contienen los identificadores de estratos ni de las unidades de muestreo requeridos para reproducir plenamente la varianza del diseño. Se reporta, por tanto, un análisis ponderado de carácter exploratorio y se separa la magnitud de asociación de la significación estadística. El artículo presenta el marco teórico, los datos, los métodos y resultados, y concluye con su discusión y limitaciones.
 
-\section{Marco teórico e hipótesis}
+\section{Marco teórico}
+\label{sec:marco}
 
 \subsection{Confianza interpersonal y familiaridad cívica}
 
@@ -75,6 +95,7 @@ Los seis reactivos de la ECP preguntan si la persona conoce o ha oído hablar de
 La cultura cívica ubica las orientaciones individuales dentro del sistema político y destaca que la participación depende de actitudes y competencias que se forman en contextos sociales \citep{AlmondVerba1963}. Esta perspectiva motiva analizar conjuntamente confianza y familiaridad, pero no implica que un único modelo reflectivo agote la complejidad de los constructos. La estructura factorial se somete a evaluación empírica antes de interpretar las rutas.
 
 \section{Datos}
+\label{sec:datos}
 
 \subsection{Fuente y población}
 
@@ -82,7 +103,7 @@ La ECP 2023 es una encuesta probabilística, estratificada, multietápica y de c
 
 Se integraron los módulos Democracia, Participación, Capital Social, Características generales y Características generales 2 mediante las claves \texttt{DIRECTORIO}, \texttt{NRO\_ENCUESTA}, \texttt{HOGAR\_NUMERO} y \texttt{PERSONA\_NUMERO}. Las claves no tuvieron duplicados ni valores incompletos en los módulos utilizados. La intersección común fue de 46.392 personas. En la base de Características generales se encontraron 64.759 registros, pero solo 46.392 coincidieron con los módulos temáticos requeridos. Esta diferencia de cobertura se debe reportar como condición de la muestra analítica, no como una discrepancia que pueda corregirse con ponderación.
 
-En el Taller 1 se reportó que no había ponderadores porque los cuatro ZIP usados entonces no incluían \texttt{FEX\_P}. En el Taller 2 se enlazó ese factor desde la Tabla de viviendas mediante \texttt{DIRECTORIO}. Todos los registros analíticos recibieron un peso positivo. La suma de pesos fue 37.076.519, cifra que resulta de los registros integrados y no debe confundirse con un total poblacional oficial sin cotejar dominios, elegibilidad y universo. La cobertura y el diseño de la ECP son definidos por el DANE y delimitan el alcance de la interpretación.
+El factor de expansión \texttt{FEX\_P}, disponible en la Tabla de viviendas, se enlazó mediante \texttt{DIRECTORIO}, único en esa tabla. El enlace fue de muchas personas a una vivienda y se verificó que no multiplicara los registros. Todos los registros analíticos recibieron un peso positivo. La suma de pesos fue 37.076.519, cifra que resulta de los registros integrados y no debe confundirse con un total poblacional oficial sin cotejar dominios, elegibilidad y universo. La cobertura y el diseño de la ECP son definidos por el DANE y delimitan el alcance de la interpretación.
 
 \subsection{Indicadores y procesamiento}
 
@@ -94,6 +115,7 @@ En el perfil inicial, 35.024 personas (75,5\%) respondieron todos los 25 indicad
 La Tabla~\ref{tab:indicadores} identifica los códigos del formulario. Familiaridad autorreportada no equivale a conocimiento factual ni a uso de los mecanismos. Fuente: DANE, formulario ECP 2023.
 
 \section{Métodos}
+\label{sec:metodos}
 
 \subsection{Especificación e identificación}
 
@@ -102,54 +124,56 @@ Se estimó un modelo de medición confirmatorio con tres factores correlacionado
   x &= \Lambda_x\xi+\delta, & y &= \Lambda_y\eta+\epsilon, \\
   \eta &= \gamma_1\xi_1+\gamma_2\xi_2+\zeta,
 \end{align}
-donde \(\xi_1\) es confianza interpersonal, \(\xi_2\) confianza institucional y \(\eta\) familiaridad autorreportada. Se fijó en uno la carga del indicador marcador de cada factor para establecer la escala. La estructura inversa planteada en el Taller 1 es observacionalmente equivalente bajo covarianzas residuales libres entre predictores; por ello el ajuste global no permite elegir una dirección causal \citep{MacCallum1993}.
+donde \(\xi_1\) es confianza interpersonal, \(\xi_2\) confianza institucional y \(\eta\) familiaridad autorreportada. Se fijó en uno la carga del indicador marcador de cada factor para establecer la escala. Una estructura inversa es observacionalmente equivalente bajo covarianzas residuales libres entre predictores; por ello el ajuste global no permite elegir una dirección causal \citep{MacCallum1993}.
 
 La cuenta de covarianzas tiene \(t=53\) parámetros libres y 325 momentos, de modo que \(gl=325-53=272\). En la formulación ordinal se estiman 82 umbrales y 382 estadísticas muestrales; con 110 parámetros libres se obtienen igualmente 272 grados de libertad. Esta cuenta coincide con los grados de libertad observados en lavaan y verifica la identificación por grados de libertad, sin constituir por sí sola prueba de identificación local.
 
 \begin{figure}[htbp]
 \centering
 \input{figuras/modelo_sem.tex}
-\caption{Modelo de medición y rutas estructurales estandarizadas. Las rutas del modelo completo son positivas; la comparación multigrupo posterior evalúa si difieren por sexo. Fuente: estimaciones propias con la ECP 2023 del DANE.}
+\caption{Modelo de medición y rutas estructurales estandarizadas. Las rutas del modelo completo son positivas; la comparación multigrupo posterior evalúa si difieren por sexo. }
 \label{fig:modelo}
+\smallskip\parbox{\textwidth}{\centering\footnotesize\textit{Fuente:} elaboración propia con microdatos de la ECP 2023 del DANE.}
 \end{figure}
 
 \subsection{Estimación, faltantes y diseño muestral}
 
-Por la naturaleza ordinal y dicotómica de los indicadores, se empleó WLSMV, estimador que utiliza umbrales y asociaciones policóricas/poliseriales y proporciona estadísticos ajustados para datos categóricos \citep{Li2016,Rosseel2012}. Los faltantes se trataron por pares, conforme a la alternativa WLSMV indicada en el Taller 2. La ausencia estructural de dos ítems institucionales para Bogotá permaneció codificada como faltante. \texttt{FEX\_P} se incorporó como peso de muestreo en los modelos; no se reescaló ni se derivó un factor alternativo.
+Por la naturaleza ordinal y dicotómica de los indicadores, se empleó WLSMV, estimador que utiliza umbrales y asociaciones policóricas/poliseriales y proporciona estadísticos ajustados para datos categóricos \citep{Li2016,Rosseel2012}. Los faltantes se trataron por pares, utilizando la información disponible para cada asociación. Este procedimiento no equivale a FIML ni demuestra que las estimaciones estén libres de sesgo por ausencia de respuesta. La ausencia estructural de dos ítems institucionales para Bogotá permaneció codificada como faltante. \texttt{FEX\_P} se incorporó como peso de muestreo en los modelos; se suministraron los valores originales al estimador, sin construir un ponderador alternativo.
 
-Aunque la ECP tiene diseño complejo, los ZIP anonimizados públicos usados no contienen identificadores de estrato ni UPM/conglomerado. \texttt{REGION} identifica dominios geográficos y \texttt{DIRECTORIO} una vivienda; no son sustitutos válidos de esas unidades de diseño. El equipo confirmó que el DANE no facilita esos identificadores ni ofrece el cálculo alternativo de varianza para este análisis. En consecuencia, la ponderación informa los puntos estimados, pero los errores estándar, intervalos y pruebas no incorporan plenamente la estratificación y conglomeración. Todas las decisiones inferenciales se califican como exploratorias.
+Aunque la ECP tiene diseño complejo, los ZIP anonimizados públicos usados no contienen identificadores de estrato ni UPM/conglomerado. \texttt{REGION} identifica dominios geográficos y \texttt{DIRECTORIO} una vivienda; no son sustitutos válidos de esas unidades de diseño. No se dispuso de esos identificadores ni de varianzas alternativas proporcionadas por el DANE para este análisis. En consecuencia, la ponderación informa los puntos estimados, pero los errores estándar, intervalos y pruebas no incorporan plenamente la estratificación y conglomeración. Todas las decisiones inferenciales se califican como exploratorias.
 
 \subsection{Evaluación del ajuste y validez}
 
 Para todos los modelos se revisaron convergencia, soluciones impropias, \(\chi^2\), grados de libertad, CFI, TLI, RMSEA con intervalo de confianza del 90\% y SRMR. Se reportan tanto las variantes robustas como las escaladas de los índices WLSMV, porque difieren de manera sustantiva en estos datos. Los puntos de corte comunes se interpretan como guías y no como reglas mecánicas, dado que el rendimiento de los índices depende del modelo, las categorías y el estimador \citep{HuBentler1999,Marsh2004,XiaYang2019}.
 
-Se examinaron residuos de correlación y los índices de modificación (IM) junto con EPC. No se incorporaron covarianzas residuales ni se eliminaron indicadores solo para mejorar el ajuste; la modificación post hoc capitaliza el azar y requiere fundamento teórico y validación independiente \citep{MacCallum1992,Kline2023}. Se estimó confiabilidad compuesta y varianza media extraída (AVE), junto con el criterio de Fornell--Larcker y HTMT \citep{FornellLarcker1981,Henseler2015}. La función usada para HTMT no incorporó el peso; por ello esos valores se presentan únicamente como diagnóstico descriptivo no ponderado.
+Se examinaron residuos de correlación y los índices de modificación (IM) junto con EPC. El modelo principal se mantuvo sin modificaciones. Se añadió una revisión exploratoria, separada del análisis principal, de la dependencia residual entre confianza en vecinos y amistades; la modificación post hoc capitaliza el azar y requiere fundamento teórico y validación independiente \citep{MacCallum1992,Kline2023}. Se estimó confiabilidad compuesta y varianza media extraída (AVE), junto con el criterio de Fornell--Larcker y HTMT \citep{FornellLarcker1981,Henseler2015}. La función usada para HTMT no incorporó el peso; por ello esos valores se presentan únicamente como diagnóstico descriptivo no ponderado.
 
 \subsection{Hipótesis, magnitud y modelos alternativos}
 
-Las hipótesis de signo positivo se contrastaron unilateralmente y se reportaron B, error estándar, \(z\), \(p\), \(\beta\) estandarizado e intervalo del 95\% para B. Dado el N grande, se priorizó la magnitud y dirección frente a la significación aislada. Se reportaron \(R^2\) del factor endógeno y \(f^2\) incremental de cada predictor. El modelo aprobado no incluye mediador ni segundo factor endógeno, así que los efectos indirectos y totales mediados no aplican a esta especificación.
+Las hipótesis de signo positivo se contrastaron unilateralmente y se reportaron B, error estándar, \(z\), \(p\), \(\beta\) estandarizado e intervalo del 95\% para B. Dado el N grande, se priorizó la magnitud y dirección frente a la significación aislada. Se reportaron \(R^2\) del factor endógeno y \(f^2\) incremental de cada predictor. La especificación principal no incluye mediador ni segundo factor endógeno, así que los efectos indirectos y totales mediados no aplican a esta especificación.
 
 Se comparó descriptivamente el modelo propuesto con una estructura exploratoria que dividió confianza institucional en dos factores. Los modelos no son anidados y WLSMV no proporcionó AIC/BIC convencionales; no se declaró un ganador exclusivamente por índices. El AFC correlacionado y el SEM de referencia tienen el mismo número de grados de libertad y prácticamente el mismo ajuste: la prueba de diferencia no tiene grados de libertad diferenciales y no permite probar si las relaciones teóricas empeoran el AFC.
 
 \subsection{Invariancia multigrupo}
 
-Se eligió sexo como variable de agrupación, con 21.405 hombres y 24.987 mujeres. Se estimó la secuencia ordinal de identificación Wu--Estabrook, primero configural, luego igualdad de umbrales y después umbrales más cargas, con parametrización theta \citep{WuEstabrook2016,Jorgensen2022}. Se consideraron cambios de CFI, RMSEA y SRMR junto con las pruebas de diferencia ajustadas. Tras la invariancia métrica ordinal, se contrastó la igualdad conjunta de las dos rutas mediante modelos libres e iguales y se evaluó cada restricción con pruebas de Wald. Por la limitación de diseño y el ajuste absoluto, estos contrastes se consideran exploratorios.
+Se eligió sexo como variable de agrupación, con 21.405 hombres y 24.987 mujeres. Se estimó la secuencia ordinal de identificación Wu--Estabrook, primero configural, luego igualdad de umbrales y después umbrales más cargas, con parametrización theta \citep{WuEstabrook2016,Jorgensen2022}. Se consideraron cambios de CFI, RMSEA y SRMR junto con las pruebas de diferencia ajustadas. Bajo la equivalencia métrica aproximada, se contrastó la igualdad conjunta de las dos rutas mediante modelos libres e iguales y se evaluó cada restricción con pruebas de Wald. Las dos pruebas de Wald por ruta se ajustaron mediante Holm y Bonferroni; la prueba conjunta se informó por separado. Las restricciones contrastan coeficientes no estandarizados en una escala de medición común; los coeficientes estandarizados describen magnitudes y su diferencia numérica no es el objeto directo de esas pruebas. Por la limitación de diseño y el ajuste absoluto, los contrastes se consideran exploratorios.
 
 \subsection{Software}
 
-El procesamiento se ejecutó con R 4.6.1, \texttt{lavaan} 0.7-3 y \texttt{semTools} 0.5-9 según la sesión reproducida en este equipo \citep{RCore2026,Rosseel2012,Jorgensen2022}. La secuencia de scripts fija una semilla, usa rutas relativas, integra los módulos, ajusta los modelos y genera las tablas que sustentan los resultados.
+Las tablas y el diagrama se regeneran desde las salidas de la ejecución vigente. Salvo indicación contraria, su fuente son cálculos propios con microdatos anonimizados de la ECP 2023 del DANE. El procesamiento se ejecutó con R 4.6.1, \texttt{lavaan} 0.7-3 y \texttt{semTools} 0.5-9 según la sesión reproducida en este equipo \citep{RCore2026,Rosseel2012,Jorgensen2022}. La secuencia de scripts fija una semilla, usa rutas relativas, integra los módulos, ajusta los modelos y genera las tablas que sustentan los resultados.
 
 \section{Resultados}
+\label{sec:resultados}
 
 \subsection{Ajuste global y local del modelo de medición}
 
-El AFC convergió y pasó las comprobaciones de solución admisible: no se observaron varianzas negativas ni correlaciones latentes mayores que uno. El modelo de tres factores obtuvo \(\chi^2_{(272)}=27.181,35\), \(p<{,}001\). Los índices robustos fueron CFI=0{,}900, TLI=0{,}890 y RMSEA=0{,}092, IC 90\% [0{,}091,0{,}093]; el SRMR fue 0{,}040. Los índices escalados fueron CFI=0{,}981, TLI=0{,}979 y RMSEA=0{,}046. La diferencia entre las versiones robustas y escaladas es material; por prudencia, no se interpreta el ajuste como inequívocamente adecuado. El chi-cuadrado se reporta como estadístico ajustado, pero su significación con este tamaño muestral no decide por sí sola la validez.
+El AFC convergió y pasó las comprobaciones de solución admisible: no se observaron varianzas negativas ni correlaciones latentes mayores que uno. El modelo de tres factores obtuvo \(\chi^2_{(272)}=27\,181{,}35\), \(p<0{,}001\). Los índices robustos fueron CFI=0{,}900, TLI=0{,}890 y RMSEA=0{,}092, IC 90\% [0{,}091;0{,}093]; el SRMR fue 0{,}040. Los índices escalados fueron CFI=0{,}981, TLI=0{,}979 y RMSEA=0{,}046. La diferencia entre las versiones robustas y escaladas es material; por prudencia, no se interpreta el ajuste como inequívocamente adecuado. El chi-cuadrado se reporta como estadístico ajustado, pero su significación con este tamaño muestral no decide por sí sola la validez. La Tabla~\ref{tab:ajuste} presenta las variantes robustas y escaladas.
 
 \input{tablas/ajuste.tex}
 
-El ajuste local mostró diez de 300 residuos de correlación con valor absoluto mayor que 0{,}10. El mayor residuo absoluto fue -0{,}219 entre los reactivos P2025S4 (desconocidos) y P2025S6 (amistades). Entre los índices de modificación más altos se encontraron las parejas P2025S5--P2025S6 y P5263S3--P5263S9, que podrían compartir contenido o contexto de respuesta. No se liberaron parámetros a partir de esos diagnósticos sin validación y razón sustantiva. Así se evita convertir una búsqueda exploratoria en una confirmación artificial del ajuste. La posible correlación residual P2025S5--P2025S6 queda como análisis futuro sujeto a calibración y validación en muestras separadas; no se estimó en este trabajo.
+El ajuste local mostró diez de 300 residuos de correlación con valor absoluto mayor que 0{,}10. El mayor residuo absoluto fue -0{,}219 entre los reactivos P2025S4 (desconocidos) y P2025S6 (amistades). Entre los índices de modificación más altos se encontraron las parejas P2025S5--P2025S6 y P5263S3--P5263S9, que podrían compartir contenido o contexto de respuesta. El modelo principal conservó sus restricciones. Como revisión exploratoria se estimó una covarianza residual P2025S5--P2025S6, justificada por la proximidad relacional de vecinos y amistades. Se dividió aleatoriamente la base en dos mitades de 23.196 personas con semilla 2026 y se estimaron las versiones original y revisada en ambas. La pareja había sido identificada previamente en la muestra completa: esta partición evalúa estabilidad interna y no constituye una confirmación independiente ni elimina la selección previa basada en los datos.
 
-Las cargas estandarizadas del AFC oscilaron entre 0{,}651 y 0{,}753 para confianza interpersonal, 0{,}660 y 0{,}914 para confianza institucional, y 0{,}857 y 0{,}944 para familiaridad con mecanismos. Todas fueron positivas y estadísticamente distintas de cero bajo los errores estándar disponibles, aunque esos errores no incorporan el diseño complejo completo. Las cargas individuales se presentan en el apéndice reproducible.
+Las cargas estandarizadas del AFC oscilaron entre 0{,}652 y 0{,}753 para confianza interpersonal, 0{,}660 y 0{,}914 para confianza institucional, y 0{,}857 y 0{,}944 para familiaridad con mecanismos. Todas fueron positivas y estadísticamente distintas de cero bajo los errores estándar disponibles, aunque esos errores no incorporan el diseño complejo completo. Las cargas individuales se presentan en el apéndice reproducible.
 
 \subsection{Confiabilidad y validez}
 
@@ -162,39 +186,50 @@ La matriz de Fornell--Larcker muestra que las raíces de AVE (0{,}701, 0{,}817 y
 
 \subsection{Rutas estructurales e hipótesis}
 
-La confianza interpersonal mostró una asociación positiva con la familiaridad (B=0{,}119, EE=0{,}011, \(z=11{,}05\), \(\beta=0{,}094\), IC 95\% para B [0{,}098,0{,}141], \(p<{,}001\), unilateral). La confianza institucional también se asoció positivamente (B=0{,}066, EE=0{,}008, \(z=8{,}19\), \(\beta=0{,}065\), IC 95\% [0{,}050,0{,}082], \(p<{,}001\), unilateral). En dirección y magnitud, ambos resultados son compatibles con H1 y H2; sin embargo, la baja magnitud, el ajuste débil y la varianza no ajustada al diseño impiden describirlos como confirmación poblacional definitiva. La covarianza estandarizada de los predictores fue 0{,}265 (H3), positiva y compatible con que las dimensiones estén relacionadas sin ser equivalentes.
+La confianza interpersonal mostró una asociación positiva con la familiaridad (B=0{,}119, EE=0{,}011, \(z=11{,}05\), \(\beta=0{,}094\), IC 95\% para B [0{,}098;0{,}141], \(p<0{,}001\), unilateral). La confianza institucional también se asoció positivamente (B=0{,}066, EE=0{,}008, \(z=8{,}19\), \(\beta=0{,}065\), IC 95\% [0{,}050;0{,}082], \(p<0{,}001\), unilateral). En dirección y magnitud, ambos resultados son compatibles con H1 y H2; sin embargo, la baja magnitud, el ajuste débil y la varianza no ajustada al diseño impiden describirlos como confirmación poblacional definitiva. La covarianza estandarizada de los predictores fue 0{,}265, positiva y compatible con que las dimensiones estén relacionadas sin ser equivalentes.
 
-El factor endógeno tuvo \(R^2=0{,}016\): el modelo explicó aproximadamente 1,6\% de la variación latente. Los tamaños incrementales únicos fueron \(f^2=.0083\) para confianza interpersonal y \(f^2=.0040\) para confianza institucional, ambos muy pequeños. Estos tamaños son coherentes con la recomendación de interpretar efectos y no confundir valores p pequeños, favorecidos por el N, con relevancia sustantiva.
+El factor endógeno tuvo \(R^2=0{,}016\): el modelo explicó aproximadamente 1,6\% de la variación latente. Los tamaños incrementales únicos fueron \(f^2=0{,}0083\) para confianza interpersonal y \(f^2=0{,}0040\) para confianza institucional, ambos muy pequeños. Estos tamaños son coherentes con la recomendación de interpretar efectos y no confundir valores p pequeños, favorecidos por el N, con relevancia sustantiva.
 
 \input{tablas/hipotesis.tex}
 
-El AFC y el SEM de referencia presentaron ajuste numéricamente equivalente (diferencia de grados de libertad igual a cero). El SEM no impone una restricción de covarianza latente que lo convierta en una prueba anidada más parsimoniosa: con dos predictores correlacionados y un resultado, sus parámetros estructurales reproducen una matriz latente libre. Por ello, la prueba de diferencia de chi-cuadrado no es interpretable como prueba de superioridad ni de deterioro estructural. La estructura alternativa de confianza institucional en dos factores tuvo CFI robusto=0{,}913, TLI=0{,}903, RMSEA robusto=0{,}086, IC 90\% [0{,}085,0{,}087] y SRMR=0{,}038. Aunque mejora algunos índices frente al modelo de tres factores, el ajuste robusto continúa débil; se mantiene como alternativa exploratoria, sin declarar un modelo ganador por ajuste únicamente. AIC y BIC no estuvieron disponibles con WLSMV.
+El AFC y el SEM de referencia presentaron ajuste numéricamente equivalente (diferencia de grados de libertad igual a cero). El SEM no impone una restricción de covarianza latente que lo convierta en una prueba anidada más parsimoniosa: con dos predictores correlacionados y un resultado, sus parámetros estructurales reproducen una matriz latente libre. Por ello, la prueba de diferencia de chi-cuadrado no es interpretable como prueba de superioridad ni de deterioro estructural. La estructura alternativa de confianza institucional en dos factores tuvo CFI robusto=0{,}913, TLI=0{,}903, RMSEA robusto=0{,}086, IC 90\% [0{,}085;0{,}087] y SRMR=0{,}038. Aunque mejora algunos índices frente al modelo de tres factores, el ajuste robusto continúa débil; se mantiene como alternativa exploratoria, sin declarar un modelo ganador por ajuste únicamente. AIC y BIC no estuvieron disponibles con WLSMV.
 
-El modelo rival invirtió la dirección, con familiaridad como predictor de confianza interpersonal e institucional, y dejó libre la covarianza residual entre estas últimas. Su ajuste global coincidió con el de referencia al redondear (\(\chi^2_s=27181{,}35\), 272 gl; CFI robusto=0{,}900; RMSEA robusto=0{,}092). En el rival, familiaridad se asoció con confianza interpersonal (\(B=0{,}088\), \(\beta=0{,}111\), EE=0{,}006) e institucional (\(B=0{,}088\), \(\beta=0{,}090\), EE=0{,}007), ambas con \(p<{,}001\). Esta equivalencia observacional impide elegir la dirección a partir del ajuste; la dirección del modelo principal proviene de la teoría y no de una superioridad empírica del ajuste \citep{MacCallum1993}.
+El modelo rival invirtió la dirección, con familiaridad como predictor de confianza interpersonal e institucional, y dejó libre la covarianza residual entre estas últimas. Su ajuste global coincidió con el de referencia al redondear (\(\chi^2_s=27\,181{,}35\), 272 gl; CFI robusto=0{,}900; RMSEA robusto=0{,}092). En el rival, familiaridad se asoció con confianza interpersonal (\(B=0{,}088\), \(\beta=0{,}111\), EE=0{,}006) e institucional (\(B=0{,}088\), \(\beta=0{,}090\), EE=0{,}007), ambas con \(p<0{,}001\). Esta equivalencia observacional impide elegir la dirección a partir del ajuste; la dirección del modelo principal proviene de la teoría y no de una superioridad empírica del ajuste \citep{MacCallum1993}.
 
 No se calcularon efectos indirectos: la especificación no contiene mediador ni otro resultado endógeno. En consecuencia, los efectos directos son las dos rutas informadas, y el efecto total coincide con cada ruta directa en este modelo. No corresponde añadir intervalos bootstrap de mediación a una estructura que no la plantea.
 
 \subsection{Sensibilidad a pesos y faltantes}
-La comparación entre casos completos sin ponderación, casos completos con \texttt{FEX\_P} y la especificación principal por pares con pesos permite evaluar la sensibilidad de las rutas a estas decisiones. La Tabla~\ref{tab:sensibilidad} se genera desde las salidas del script estructural. La magnitud relativa de las asociaciones puede cambiar entre especificaciones; esto se presenta como sensibilidad metodológica y no como contradicción, dado que también cambia la muestra efectiva y el peso de cada observación.
+La comparación entre casos completos sin ponderación, casos completos con \texttt{FEX\_P} y la especificación principal por pares con pesos permite evaluar la sensibilidad de las rutas a estas decisiones. La Tabla~\ref{tab:sensibilidad} presenta las estimaciones obtenidas en cada escenario. La magnitud relativa de las asociaciones puede cambiar entre especificaciones; esto se presenta como sensibilidad metodológica y no como contradicción, dado que también cambia la muestra efectiva y el peso de cada observación.
 \input{tablas/sensibilidad.tex}
 
-\subsection{Sensibilidad aproximada al efecto de diseño}
-Como diagnóstico conservador, se aproximó el efecto de diseño mediante Kish, $deff=1+CV(FEX\_P)^2$, y se inflaron los errores estándar por $\sqrt{deff}$. Este cálculo solo refleja la desigualdad de pesos; no modela conglomeración, estratificación ni faltantes y no sustituye una corrección completa del diseño. Las conclusiones sobre significación deben matizarse con este análisis exploratorio.
-El efecto aproximado fue \(deff=1{,}758\). Tras inflar los EE, las rutas mantuvieron sus signos y su evidencia estadística (interpersonal: \(EE=0{,}014\), \(z=8{,}33\); institucional: \(EE=0{,}011\), \(z=6{,}18\); ambas \(p<{,}001\)). Esto no valida los errores estándar del diseño, pues la aproximación no incorpora sus componentes no disponibles.
+\subsection{Sensibilidad a la no aplicabilidad territorial}
+Se reestimó el SEM con las mismas 46.392 personas, excluyendo Asamblea (P5263S6) y Gobernación (P5263S12) de la medición institucional para todas las regiones. Esta comparación distingue la no aplicabilidad territorial de una simple exclusión de personas; no es una prueba anidada de ajuste porque cambia el conjunto de indicadores. La Tabla~\ref{tab:territorial} informa las rutas resultantes y el archivo de resultados incluye su ajuste global.
+\input{tablas/sensibilidad_territorial.tex}
+\input{tablas/interpretacion_territorial.tex}
+
+\subsection{Revisión exploratoria de la medición}
+La Tabla~\ref{tab:revision} compara el modelo de referencia con la covarianza residual entre vecinos y amistades en las dos particiones. Esta revisión responde a una hipótesis de dependencia local entre vínculos cercanos; no redefine la confianza interpersonal como exclusivamente generalizada ni autoriza añadir otras dependencias por búsqueda automática. Los cambios se interpretan junto con la admisibilidad de la solución y la estabilidad de las rutas.
+\input{tablas/revision_medicion.tex}
+\input{tablas/interpretacion_revision.tex}
+
+\subsection{Escenario hipotético de inflación de errores estándar}
+Para ilustrar cuánto cambiarían los intervalos ante errores mayores, se multiplicaron los EE del modelo ponderado por $\sqrt{1+CV(FEX\_P)^2}=\sqrt{1{,}758}$. La Tabla~\ref{tab:deff} es un escenario hipotético adicional, no una estimación del efecto de diseño de los coeficientes del SEM. Los EE originales ya incorporan ponderación: esta multiplicación puede contar nuevamente parte de la variabilidad asociada con los pesos. No tiene garantía de ser conservadora ni corrige estratificación o conglomeración; tampoco demuestra que la significación se conservaría bajo el diseño real.
 \input{tablas/sensibilidad_deff.tex}
 
 \subsection{Invariancia y diferencias de rutas por sexo}
 
-Los dos grupos superaron ampliamente el tamaño mínimo operativo de 200: 21.405 hombres y 24.987 mujeres. En la secuencia ordinal, el CFI escalado fue 0{,}981 en el modelo configural, 0{,}981 con umbrales y 0{,}981 con umbrales y cargas; los cambios fueron -0{,}0002 y +0{,}0005. El RMSEA escalado pasó de 0{,}046 a 0{,}045 y 0{,}044, y el SRMR permaneció cercano a 0{,}041. Sin embargo, la prueba de diferencia configural--umbrales fue significativa (\(\Delta\chi^2=59{,}51\), 38 gl, \(p=0{,}014\)); la de umbrales--métrica no fue significativa (\(\Delta\chi^2=31{,}32\), 22 gl, \(p=0{,}090\)). Los cambios aproximados son pequeños, pero la discrepancia de chi-cuadrado no permite presentar la secuencia como evidencia inequívoca. Además, el ajuste robusto absoluto del modelo configural fue débil (CFI=0{,}898; RMSEA=0{,}093).
+Los dos grupos superaron ampliamente el tamaño mínimo operativo de 200: 21.405 hombres y 24.987 mujeres. En la secuencia ordinal, el CFI escalado fue 0{,}981 en el modelo configural, 0{,}981 con umbrales y 0{,}981 con umbrales y cargas; los cambios fueron -0{,}0002 y +0{,}0005. El RMSEA escalado pasó de 0{,}046 a 0{,}045 y 0{,}043, y el SRMR permaneció cercano a 0{,}041. Sin embargo, la prueba de diferencia configural--umbrales fue significativa (\(\Delta\chi^2=59{,}51\), 38 gl, \(p=0{,}014\)); la de umbrales--métrica no fue significativa (\(\Delta\chi^2=31{,}32\), 22 gl, \(p=0{,}090\)). Los cambios aproximados son pequeños, pero la discrepancia de chi-cuadrado no permite presentar la secuencia como evidencia inequívoca. Además, el ajuste robusto absoluto del modelo configural fue débil (CFI=0{,}898; RMSEA=0{,}093).
 
-Al imponer conjuntamente igualdad de rutas, la prueba ajustada fue significativa (\(\Delta\chi^2=8{,}21\), 2 gl, \(p=0{,}017\)). La prueba Wald por ruta no indicó diferencia en la asociación interpersonal (\(\beta_{H}=0{,}096\), \(\beta_{M}=0{,}090\), \(p=0{,}650\)). La asociación institucional fue mayor en hombres (\(\beta=0{,}083\)) que en mujeres (\(\beta=0{,}049\)); la prueba de igualdad dio \(p=0{,}034\). Al ajustar las dos pruebas de Wald, H2 no conserva significación con Bonferroni (umbral 0{,}025) ni con Holm; la prueba conjunta de rutas (\(p=0{,}017\)) es un contraste distinto y sí permanece significativa sin este ajuste de dos pruebas. En consecuencia, la diferencia institucional por sexo es un hallazgo exploratorio y matizado. Como las comparaciones de rutas se basan en equivalencia métrica aproximada y errores que no incorporan UPM y estratos, se interpretan como indicios de posible moderación asociativa.
+Al imponer conjuntamente igualdad de rutas, la prueba ajustada fue significativa (\(\Delta\chi^2=8{,}21\), 2 gl, \(p=0{,}017\)). La prueba Wald por ruta no indicó diferencia en la asociación interpersonal (\(\beta_{H}=0{,}096\), \(\beta_{M}=0{,}090\), \(p=0{,}650\)). La estimación estandarizada de la asociación institucional fue mayor en hombres (\(\beta=0{,}083\)) que en mujeres (\(\beta=0{,}049\)); la prueba de igualdad dio \(p=0{,}034\). Al ajustar las dos pruebas de Wald, H2 no conserva significación con Bonferroni (umbral 0{,}025) ni con Holm; la prueba conjunta de rutas (\(p=0{,}017\)) es un contraste distinto y sí permanece significativa sin este ajuste de dos pruebas. En consecuencia, la prueba conjunta sugiere heterogeneidad, pero las pruebas individuales ajustadas no permiten localizarla de forma concluyente en la ruta institucional. Como las comparaciones de rutas se basan en equivalencia métrica aproximada y errores que no incorporan UPM y estratos, se interpretan como indicios de posible moderación asociativa.
 
+La Tabla~\ref{tab:invarianza} resume los cambios entre niveles; los índices absolutos se encuentran en la Tabla~\ref{tab:ajuste}.
 \input{tablas/invarianza.tex}
-La prueba configural--umbrales fue significativa (\(p=0{,}014\)) y el paso umbrales--métrica no lo fue (\(p=0{,}090\)). Los cambios de ajuste escalado fueron pequeños, pero no eliminan la discrepancia con las pruebas de diferencia. Los índices robustos de algunos modelos multigrupo no están definidos por lavaan y se reportan como no disponibles.
+Los índices robustos de algunos modelos multigrupo no están definidos por lavaan y se reportan como no disponibles.
 
 \input{tablas/wald_sexo.tex}
 
 \section{Discusión}
+\label{sec:discusion}
 
 Este estudio examinó la relación entre confianza y familiaridad con mecanismos formales de participación usando la intersección de cinco módulos de la ECP 2023. Las dos rutas estimadas fueron positivas, como se planteó en H1 y H2, pero su magnitud fue pequeña y el modelo explicó una fracción reducida de la varianza. La significación de las pruebas no debe convertirse en una afirmación de importancia práctica ni en evidencia causal. En una muestra de este tamaño, incluso asociaciones modestas pueden producir valores p reducidos.
 
@@ -202,13 +237,13 @@ El resultado para confianza interpersonal es compatible con la idea de que los v
 
 La asociación positiva de confianza institucional con familiaridad es coherente con una mayor orientación hacia canales institucionales, pero también admite explicaciones alternativas. Las personas más interesadas en política pueden conocer instituciones y mecanismos y, al mismo tiempo, formar evaluaciones particulares de ellas; variables como educación, exposición a trámites, edad, uso de medios o experiencia de participación podrían explicar parte de la asociación. El modelo no incluye esos factores ni identifica su orden temporal. Por tanto, la ruta no significa que aumentar confianza vaya a producir mayor familiaridad.
 
-La diferencia por sexo de la asociación institucional requiere especial prudencia. La magnitud estandarizada fue mayor entre hombres, pero la prueba por ruta es exploratoria y los errores no están ajustados a las unidades de muestreo. Además, la comparación supone invariancia de medición ordinal que muestra evidencia mixta: los cambios de ajuste aproximados son pequeños, mientras la prueba de umbrales rechaza igualdad al nivel convencional. La presencia de no aplicabilidad estructural en dos reactivos institucionales en Bogotá y el ajuste robusto configural débil también pueden influir en la comparabilidad. Un análisis de seguimiento debería examinar invariancia parcial con criterios sustantivos, datos adicionales de diseño y replicación independiente antes de sostener una diferencia poblacional.
+La diferencia por sexo de la asociación institucional requiere especial prudencia. La estimación estandarizada fue mayor entre hombres, pero la prueba específica no conservó significación con Holm ni Bonferroni (p ajustado=0{,}067). La prueba conjunta sugiere heterogeneidad sin identificar de forma concluyente una ruta particular; además, los errores no están ajustados a las unidades de muestreo. Además, la comparación supone invariancia de medición ordinal que muestra evidencia mixta: los cambios de ajuste aproximados son pequeños, mientras la prueba de umbrales rechaza igualdad al nivel convencional. La presencia de no aplicabilidad estructural en dos reactivos institucionales en Bogotá y el ajuste robusto configural débil también pueden influir en la comparabilidad. Un análisis de seguimiento debería examinar invariancia parcial con criterios sustantivos, datos adicionales de diseño y replicación independiente antes de sostener una diferencia poblacional.
 
-El principal resultado metodológico es que la medición no puede darse por resuelta. El ajuste robusto del AFC no alcanza los criterios orientativos usuales de CFI/TLI y RMSEA, aunque sus versiones escaladas son más favorables y el SRMR es bajo. La discrepancia entre familias de índices para WLSMV ha sido documentada y no se resuelve seleccionando solo la cifra más favorable \citep{XiaYang2019}. La batería institucional puede estar representando múltiples dimensiones de evaluación pública, y los residuos/IM detectan dependencias locales que conviene explicar mediante contenido. La alternativa de dos factores mejora parcialmente el ajuste robusto, pero sigue siendo exploratoria y necesita respaldo conceptual. No se añadieron correlaciones residuales post hoc porque los índices de modificación, por sí solos, no justifican cambios confirmatorios.
+El principal resultado metodológico es que la medición no puede darse por resuelta. El ajuste robusto del AFC no alcanza los criterios orientativos usuales de CFI/TLI y RMSEA, aunque sus versiones escaladas son más favorables y el SRMR es bajo. La discrepancia entre familias de índices para WLSMV ha sido documentada y no se resuelve seleccionando solo la cifra más favorable \citep{XiaYang2019}. La batería institucional puede estar representando múltiples dimensiones de evaluación pública, y los residuos/IM detectan dependencias locales que conviene explicar mediante contenido. La alternativa de dos factores mejora parcialmente el ajuste robusto, pero sigue siendo exploratoria y necesita respaldo conceptual. La covarianza residual vecinos--amistades se evaluó por separado como revisión exploratoria interna. Su evaluación no convierte el modelo revisado en confirmatorio: la selección inicial utilizó información de la base completa y se necesita replicación externa.
 
 En confiabilidad, los valores compuestos fueron adecuados, pero la AVE interpersonal quedó marginalmente bajo 0{,}50. La evaluación discriminante resultó favorable en las correlaciones latentes y HTMT calculado, aunque este último no incorporó la ponderación. Por tanto, no debe afirmarse que la validez discriminante ponderada haya quedado demostrada. La conjunción de buen CR y ajuste débil muestra que consistencia interna alta no equivale a estructura factorial correcta.
 
-El factor de expansión es necesario para ponderar los puntos estimados, y su incorporación diferencia este análisis de las estimaciones previas sin peso. No obstante, ponderar no reproduce automáticamente el diseño multietápico. Los identificadores anonimizados disponibles no permiten agrupar observaciones en las unidades de muestreo ni especificar estratos. Como el DANE no proporciona esos identificadores o varianzas alternativas para este análisis, los intervalos y pruebas no incorporan toda la incertidumbre muestral. La suma de los factores en la intersección tampoco se interpreta como un total poblacional oficial. La inferencia se limita a resultados ponderados exploratorios, y cualquier generalización formal debe reconocer esta restricción.
+El factor de expansión es necesario para ponderar los puntos estimados, y su incorporación diferencia este análisis de las estimaciones previas sin peso. No obstante, ponderar no reproduce automáticamente el diseño multietápico. Los identificadores anonimizados disponibles no permiten agrupar observaciones en las unidades de muestreo ni especificar estratos. Al no disponer de esos identificadores o varianzas alternativas para este análisis, los intervalos y pruebas no incorporan toda la incertidumbre muestral. La suma de los factores en la intersección tampoco se interpreta como un total poblacional oficial. La inferencia se limita a resultados ponderados exploratorios, y cualquier generalización formal debe reconocer esta restricción.
 
 La definición del desenlace es otra delimitación importante. Se midió si la persona declara conocer o haber oído de mecanismos, no su conocimiento factual ni su uso. Las seis respuestas binarias son indicadores de reconocimiento y pueden reflejar niveles de exposición distintos. Una siguiente investigación podría contrastar este factor con preguntas de conocimiento factual, participación efectiva, educación cívica y experiencia de contacto institucional. También podría incorporar covariables justificadas y separar la medición por zona o grupo de edad si los tamaños y el diseño lo permiten.
 
@@ -219,10 +254,11 @@ Finalmente, los modelos de referencia e inverso pueden ser observacionalmente eq
 Primero, el corte transversal impide establecer precedencia temporal o causalidad. Segundo, el ajuste robusto del modelo de tres factores fue débil y la AVE de confianza interpersonal resultó limítrofe; los índices escalados más favorables no eliminan esta preocupación. Tercero, el diseño complejo no pudo incorporarse plenamente a la varianza: se usó \texttt{FEX\_P}, pero faltan estratos y UPM/conglomerados y no se dispuso de varianzas calculadas por el DANE. Cuarto, los faltantes se trataron por pares y existen dos reactivos con no aplicabilidad territorial; la base analítica es una intersección de módulos y no el total oficial de encuestados. Quinto, HTMT fue calculado sin ponderación y funciona como diagnóstico complementario. Sexto, no se ajustaron covariables potencialmente asociadas con confianza y familiaridad. Finalmente, las medidas son autoinformadas y pueden compartir sesgo de método común.
 
 \section{Conclusiones}
+\label{sec:conclusiones}
 
-En la base integrada de la ECP 2023, la confianza interpersonal y la confianza institucional mostraron asociaciones positivas, pequeñas, con la familiaridad autorreportada con mecanismos de participación. El modelo explicó 1,6\% de la varianza del factor endógeno. La ruta institucional fue más alta entre hombres que entre mujeres en las pruebas multigrupo, mientras que no se detectó diferencia por sexo para la ruta interpersonal. Estos resultados responden la pregunta en términos asociativos, pero no prueban causalidad ni relevancia práctica elevada.
+La confianza interpersonal y la institucional se asociaron positivamente, con magnitudes pequeñas, con la familiaridad autorreportada con mecanismos de participación. La capacidad explicativa fue reducida y las comparaciones específicas ajustadas no permitieron localizar una diferencia concluyente por sexo. El resultado responde la pregunta en términos asociativos, sin establecer causalidad ni una relevancia práctica elevada.
 
-La conclusión sustantiva debe condicionarse al ajuste robusto débil y a la limitación de diseño: los pesos \texttt{FEX\_P} se incorporaron, pero no se pudieron corregir errores e intervalos por estratificación y conglomeración. Por esto, los contrastes y las diferencias de grupo son exploratorios. El estudio aporta una primera estimación reproducible y señala la necesidad de mejorar la medición, contrastar los hallazgos en otra muestra y disponer de componentes de varianza para inferencia plenamente ajustada.
+La interpretación permanece condicionada por la medición y por la incertidumbre del diseño muestral. Las sensibilidades documentan la estabilidad de algunas asociaciones y una mejora parcial del ajuste, pero no sustituyen la validación externa ni la corrección completa de varianzas. El aporte del estudio es una aplicación reproducible que delimita sus inferencias y señala cómo mejorar la medición y contrastar los hallazgos con nueva información.
 
 \section*{Disponibilidad de datos y código}
 
@@ -232,33 +268,41 @@ Los microdatos anonimizados de la ECP 2023 se descargan del catálogo DANE-ANDA:
 \bibliography{referencias}
 
 \appendix
-\section{Estadísticos descriptivos por indicador}
+\section{Material complementario}
+\label{app:complementario}
+\subsection{Estadísticos descriptivos por indicador}
 \label{ap:descriptivos}
 Los descriptivos corresponden a la base analítica integrada, sin ponderación, antes de la estimación WLSMV. En los reactivos dicotómicos, la media es la proporción no ponderada que reportó conocer u oír hablar del mecanismo.
 \input{tablas/estadisticos_descriptivos.tex}
 
-\section{Cargas estandarizadas del modelo de medición}
-Las cargas, errores estándar y estadísticos $z$ del AFC ponderado se presentan para facilitar la evaluación de cada indicador.
+\subsection{Cargas estandarizadas del modelo de medición}
+Las cargas, errores estándar, pruebas e intervalos corresponden a la solución completamente estandarizada del AFC ponderado. Se obtuvieron de la solución estandarizada de \texttt{lavaan}, incluidos los indicadores cuya carga no estandarizada fija la escala del factor.
 \input{tablas/cargas_estandarizadas.tex}
 
-\section{Matriz policórica de los 25 indicadores}
+\subsection{Matriz policórica de los 25 indicadores}
 \label{ap:policoricas}
-La matriz fue calculada en la Fase 1 con los 35.024 casos completos y códigos ordinales/binarios, sin ponderación; se adjunta para trazabilidad descriptiva y no como matriz ponderada del modelo WLSMV de Fase 2. Las etiquetas son los códigos del formulario.
+La matriz fue calculada en la Fase 1 con los 35.024 casos completos y códigos ordinales/binarios, sin ponderación; se adjunta para trazabilidad descriptiva y no como matriz ponderada del modelo WLSMV de Fase 2. Las abreviaturas I4--I7 corresponden a P2025S4--P2025S7, T1--T15 a P5263S1--P5263S15 y K1--K6 a P5376S1--P5376S6.
 \begin{landscape}
+\pdfpageattr{/Rotate 90}
 \input{tablas/matriz_policorica.tex}
+\clearpage
+\pdfpageattr{/Rotate 0}
 \end{landscape}
 
-\section{Sintaxis reproducible del análisis}
+\subsection{Sintaxis reproducible del análisis}
 \label{ap:codigo}
-Los scripts de integración, estimación, diagnóstico e invariancia se ejecutan en orden de \texttt{00\_preparacion.R} a \texttt{04\_exportar\_resultados.R}. Requieren los cinco ZIP de módulos y \texttt{Tabla de viviendas.zip} en la carpeta relativa \texttt{datos\_crudos/}, descargados por separado del catálogo DANE. La sintaxis del modelo de referencia es:
+El punto de entrada es \texttt{00\_ejecutar\_taller2.R}, que regenera diagnósticos, estimaciones, sensibilidades y tablas desde los archivos originales. El flujo requiere los cinco ZIP de módulos y \texttt{Tabla de viviendas.zip} en la carpeta relativa \texttt{datos\_crudos/}, descargados por separado del catálogo DANE. La sintaxis del modelo de referencia es:
 \begin{verbatim}
-modelo_medicion <- '
+modelo_sem <- '
   ConfianzaInterpersonal =~ P2025S4 + P2025S5 + P2025S6 + P2025S7
-  ConfianzaInstitucional =~ P5263S1 + P5263S2 + P5263S3 + P5263S4 + P5263S5 +
-                            P5263S6 + P5263S7 + P5263S8 + P5263S9 + P5263S10 +
-                            P5263S11 + P5263S12 + P5263S13 + P5263S14 + P5263S15
-  ConocimientoMecanismos =~ P5376S1 + P5376S2 + P5376S3 + P5376S4 + P5376S5 + P5376S6
-  ConocimientoMecanismos ~ ConfianzaInterpersonal + ConfianzaInstitucional
+  ConfianzaInstitucional =~ P5263S1 + P5263S2 + P5263S3 +
+    P5263S4 + P5263S5 + P5263S6 + P5263S7 + P5263S8 +
+    P5263S9 + P5263S10 + P5263S11 + P5263S12 + P5263S13 +
+    P5263S14 + P5263S15
+  ConocimientoMecanismos =~ P5376S1 + P5376S2 + P5376S3 +
+    P5376S4 + P5376S5 + P5376S6
+  ConocimientoMecanismos ~ ConfianzaInterpersonal +
+    ConfianzaInstitucional
   ConfianzaInterpersonal ~~ ConfianzaInstitucional
 '
 fit <- lavaan::sem(modelo_sem, data=datos, ordered=items,
@@ -267,7 +311,7 @@ fit <- lavaan::sem(modelo_sem, data=datos, ordered=items,
 \end{verbatim}
 
 \subsection*{Scripts reproducibles}
-La secuencia de ejecución es \texttt{00\_preparacion.R}, \texttt{01\_afc.R}, \texttt{02\_estructural.R}, \texttt{03\_multigrupo.R} y \texttt{04\_exportar\_resultados.R}. Los archivos completos y las salidas agregadas acompañan el manuscrito.
+El ejecutor integra los diagnósticos, el AFC, el SEM, las sensibilidades y el multigrupo. El código completo acompaña el manuscrito y el orden de ejecución se documenta en el archivo README del paquete.
 
 \end{document}
 

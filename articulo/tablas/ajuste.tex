@@ -1,21 +1,39 @@
-\begingroup\scriptsize\setlength{\tabcolsep}{2pt}
-\begin{table}
+\begin{table}[htbp]\centering\small
+\caption{Índices de ajuste de los modelos ponderados}\label{tab:ajuste}
+\textit{Panel A. Índices robustos e intervalo del 90\% para RMSEA}\par\smallskip
 
-\caption{\label{tab:ajuste}Índices de ajuste de los modelos ponderados}
-\centering
-\resizebox{\linewidth}{!}{\begin{tabular}[t]{lrrrlrrrrrrrrr}
+\resizebox{\linewidth}{!}{\begin{tabular}{lrrrrrlr}
 \toprule
-Modelo & n & Chi2 esc. & gl & p & CFI rob. & TLI rob. & RMSEA rob. & IC inf. & IC sup. & SRMR & CFI esc. & TLI esc. & RMSEA esc.\\
+Modelo & Chi2 aj. & gl & CFI & TLI & RMSEA & IC 90\% & SRMR\\
 \midrule
-AFC & 46.392 & 27.181,35 & 272 & <,001 & 0,900 & 0,890 & 0,092 & 0,091 & 0,093 & 0,040 & 0,981 & 0,979 & 0,046\\
-SEM principal & 46.392 & 27.181,35 & 272 & <,001 & 0,900 & 0,890 & 0,092 & 0,091 & 0,093 & 0,040 & 0,981 & 0,979 & 0,046\\
-Alternativo 2D & 46.392 & 23.275,26 & 269 & <,001 & 0,913 & 0,903 & 0,086 & 0,085 & 0,087 & 0,038 & 0,984 & 0,982 & 0,043\\
-Rival inverso & 46.392 & 27.181,35 & 272 & <,001 & 0,900 & 0,890 & 0,092 & 0,091 & 0,093 & 0,040 & 0,981 & 0,979 & 0,046\\
-Configural & 46.392 & 27.451,29 & 544 & <,001 & 0,898 & 0,888 & 0,093 & 0,091 & 0,094 & 0,041 & 0,981 & 0,979 & 0,046\\
+AFC & 27.181,35 & 272 & 0,900 & 0,890 & 0,092 & {}[0,091; 0,093] & 0,040\\
+SEM principal & 27.181,35 & 272 & 0,900 & 0,890 & 0,092 & {}[0,091; 0,093] & 0,040\\
+Alternativo 2D & 23.275,26 & 269 & 0,913 & 0,903 & 0,086 & {}[0,085; 0,087] & 0,038\\
+Rival inverso & 27.181,35 & 272 & 0,900 & 0,890 & 0,092 & {}[0,091; 0,093] & 0,040\\
+Configural & 27.451,29 & 544 & 0,898 & 0,888 & 0,093 & {}[0,091; 0,094] & 0,041\\
 \addlinespace
-Umbrales & 46.392 & 27.778,41 & 582 & <,001 & NA & NA & NA & NA & NA & 0,041 & 0,981 & 0,980 & 0,045\\
-Métrica & 46.392 & 27.091,71 & 604 & <,001 & NA & NA & NA & NA & NA & 0,041 & 0,981 & 0,981 & 0,043\\
+Umbrales & 27.778,41 & 582 & -- & -- & -- & -- & 0,041\\
+Métrica & 27.091,71 & 604 & -- & -- & -- & -- & 0,041\\
 \bottomrule
 \end{tabular}}
+\par\medskip
+\textit{Panel B. Índices escalados}\par\smallskip
+
+\begin{tabular}{lrrr}
+\toprule
+Modelo & CFI esc. & TLI esc. & RMSEA esc.\\
+\midrule
+AFC & 0,981 & 0,979 & 0,046\\
+SEM principal & 0,981 & 0,979 & 0,046\\
+Alternativo 2D & 0,984 & 0,982 & 0,043\\
+Rival inverso & 0,981 & 0,979 & 0,046\\
+Configural & 0,981 & 0,979 & 0,046\\
+\addlinespace
+Umbrales & 0,981 & 0,980 & 0,045\\
+Métrica & 0,981 & 0,981 & 0,043\\
+\bottomrule
+\end{tabular}
+\par\smallskip\footnotesize $n=46\,392$ en todos los modelos; $p<0{,}001$ para los estadísticos ajustados. Los guiones indican índices robustos no disponibles.
+% FUENTE_ECP_2023
+\par\smallskip\noindent\parbox{\linewidth}{\footnotesize\textit{Fuente:} elaboración propia con microdatos de la ECP 2023 del DANE.}
 \end{table}
-\endgroup

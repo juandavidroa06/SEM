@@ -4,6 +4,12 @@ source("00_preparacion.R")
 if (!requireNamespace("lavaan", quietly = TRUE) || !requireNamespace("semTools", quietly = TRUE))
   stop("Se requieren lavaan y semTools. Instálelos antes de ejecutar; este script no instala paquetes.")
 afc <- do.call(lavaan::cfa, c(list(model = modelo_medicion), opts))
+stopifnot(lavaan::lavInspect(afc, "converged"), lavaan::lavInspect(afc, "post.check"))
+residuos_cor <- lavaan::lavResiduals(afc, type = "cor")$cov
+utils::write.csv(as.data.frame(as.table(as.matrix(residuos_cor))),
+  "salidas/08_residuos_correlacion.csv", row.names = FALSE)
+utils::write.csv(lavaan::lavInspect(afc, "sampstat")$cov,
+  "salidas/08_matriz_asociacion_ponderada.csv")
 fit_names <- c("chisq", "chisq.scaled", "df", "pvalue", "pvalue.scaled", "cfi.robust", "tli.robust",
   "rmsea.robust", "rmsea.ci.lower.robust", "rmsea.ci.upper.robust",
   "cfi.scaled", "tli.scaled", "rmsea.scaled", "rmsea.ci.lower", "rmsea.ci.upper", "cfi", "tli", "rmsea", "srmr")

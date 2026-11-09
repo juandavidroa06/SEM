@@ -1,133 +1,164 @@
-# Taller 1 SEM: ECP 2023
+# Confianza y familiaridad con mecanismos de participación: ECP 2023
 
-Proyecto de trabajo en R para el Taller 1 de Modelacion de Ecuaciones Estructurales.
+Proyecto académico de Modelación de Ecuaciones Estructurales, Universidad Santo Tomás,
+2026-II. Autores: Juan David Roa Castañeda, Gabriel Felipe Aldana Vargas y Laura Camila
+Rodríguez Granados.
 
-## Fuente
+El estudio relaciona confianza interpersonal, confianza institucional y familiaridad
+autorreportada con seis mecanismos de participación. Emplea 25 indicadores ordinales
+y binarios de la Encuesta de Cultura Política (ECP) 2023 del DANE y una base integrada
+de 46.392 personas. El análisis es asociativo y exploratorio.
 
-- Entidad: Departamento Administrativo Nacional de Estadistica (DANE).
-- Operacion: Encuesta de Cultura Politica (ECP), 2023.
-- Catalogo oficial ANDA: <https://microdatos.dane.gov.co/index.php/catalog/822>.
-- Fecha de descarga: 2026-10-19.
-- Revisar y documentar los terminos de uso indicados por ANDA en la entrega.
+## Productos vigentes
 
-## Contenido
+- `articulo/articulo.pdf`: manuscrito compilado, con resumen en español e inglés.
+- `articulo/articulo.tex`, `articulo/referencias.bib`, `articulo/tablas/` y
+  `articulo/figuras/`: fuentes completas del artículo.
+- `outputs/Taller2_SEM_resultados.xlsx`: resultados agregados, con las seis hojas
+  solicitadas por el curso y hojas adicionales de sensibilidad y tamaños de efecto.
+- `entregables/Taller2_SEM_Roa_Aldana_Rodriguez.zip`: paquete público reproducible
+  con código, artículo y salidas agregadas; incluye manifiesto SHA-256.
+- `REVISION_PUBLICACION.md`: alcance de la revisión y comprobaciones realizadas.
 
-- `datos_crudos/`: carpeta local para los ZIP originales descargados del DANE;
-  por sus condiciones de uso, los microdatos no se versionan en este repositorio.
-- `documentacion/`: cuestionario, manual técnico y diccionario oficial en ZIP.
-- `00_inspeccion_base.R`: script inicial en R base que lee los CSV directamente
-  desde los ZIP y genera un diagnostico de filas, variables e identificadores.
-- `01_perfil_indicadores.R`: recodifica valores especiales para el perfil y
-  genera frecuencias de los indicadores candidatos.
-- `02_estimacion_sem.R`: estima los CFA por constructo y el SEM integrado con
-  `lavaan`, usando WLSMV para indicadores ordinales/binarios.
-- `03_comparacion_medicion.R`: compara el baseline aprobado con alternativas
-  teóricas para cada constructo, usando una muestra común.
-- `04_sem_instituciones_dos_dimensiones.R`: reestima en una misma muestra el
-  SEM aprobado y el alternativo con dos dimensiones institucionales; este
-  último es exploratorio.
-- `05_calidad_descriptivos.R`: valida rangos e IDs, analiza faltantes, patrones,
-  Little MCAR, perfiles constantes, descriptivos, distancias y Mardia.
-- `05_resultados_calidad_descriptivos.md`: interpreta estos diagnósticos y sus
-  límites para indicadores ordinales/binarios.
-- `06_asociacion_afe.R`: estima matriz policórica, alfa ordinal, omega total,
-  correlación ítem-resto, KMO, Bartlett, análisis paralelo y AFE MINRES oblimin.
-- `06_resultados_asociacion_afe.md`: interpreta resultados de las soluciones
-  exploratoria de cinco factores y teórica de tres factores.
-- `07_especificacion_modelo.md`: marco conceptual, hipótesis con signos,
-  diagrama, ecuaciones y matrices LISREL, conteo/identificación y modelo rival.
-- `07_especificacion_modelo.R`: exporta sintaxis `lavaan` y conteo reproducible
-  para las versiones de referencia y rival, sin estimarlas.
-- `07_diagrama_modelo.svg`: diagrama de caminos con indicadores observados y
-  constructos latentes.
-- `04_comparacion_teorica_medicion.md`: interpreta las comparaciones y deja
-  documentada la decisión provisional; el modelo aprobado permanece como
-  referencia.
-- `salidas/`: resultados generados por los scripts.
+## Fuente y datos locales
 
-## Datos y entregables con microdatos
+Fuente: DANE, [catálogo ANDA de la ECP 2023](https://microdatos.dane.gov.co/index.php/catalog/822).
+Consulta el cuestionario, la metodología y los términos de uso del catálogo antes de
+reutilizar los datos. La descarga registrada inicialmente por el equipo fue el
+19 de octubre de 2026; el análisis utiliza también los módulos adicionales y la tabla
+de viviendas disponibles en la misma operación.
 
-Para reproducir los análisis, descarga los módulos de la ECP 2023 desde el
-[catálogo ANDA del DANE](https://microdatos.dane.gov.co/index.php/catalog/822)
-y coloca los ZIP en `datos_crudos/` con los nombres esperados por los scripts.
-No subas esos archivos al repositorio. El libro `outputs/Taller2_SEM_resultados.xlsx`
-y `entregables/Taller2_SEM_Roa_Aldana_Rodriguez.zip` contienen resultados
-agregados y código, no filas individuales ni ZIP del DANE; ambos forman parte
-de la entrega versionada. El paquete reproducible contiene los scripts, el
-artículo compilado y las salidas agregadas necesarias para auditarlo.
+Los microdatos no se redistribuyen. Descarga los archivos originales del catálogo y
+colócalos, sin descomprimir, en `datos_crudos/` con estos nombres locales:
 
-El primer diagnóstico de R encontró 46.392 registros en cada uno de los módulos
-de Democracia, Participación y Capital Social; los identificadores de persona
-están completos y no se repiten en esos módulos. El módulo de Características
-generales tiene 64.759 registros. La intersección de identificadores entre los
-cuatro archivos es de 46.392 personas. El resultado reproducible está en
-`salidas/00_diagnostico_modulos.csv`.
+1. `Democracia.zip`
+2. `Participacion.zip`
+3. `Capital_social.zip`
+4. `Caracteristicas_generales.zip`
+5. `Caracteriasticas generales 2.zip`
+6. `Tabla de viviendas.zip`
 
-Los lectores ZIP buscan la extensión CSV por bytes para evitar fallos de
-conversión de los nombres acentuados del DANE en Windows.
+El quinto nombre conserva la grafía utilizada en el proyecto. Cada ZIP debe contener
+un único CSV. Los cinco módulos de personas se integran por `DIRECTORIO`,
+`NRO_ENCUESTA`, `HOGAR_NUMERO` y `PERSONA_NUMERO`, verificando claves completas y únicas.
+La tabla de viviendas tiene `DIRECTORIO` único y aporta `FEX_P`, `REGION` y `P3` sin
+multiplicar los registros de personas. Las 46.392 personas integradas tienen peso
+positivo y completo. No se calcula un factor de expansión nuevo.
 
-Abrir `Taller1_SEM_ECP2023.Rproj` en RStudio y ejecutar los scripts en orden.
-Los constructos e indicadores propuestos se revisaron con el cuestionario y el
-diagnostico; la propuesta fue aprobada por el docente el 20-10-2026.
+## Reproducción del análisis
 
-## Ejecucion del modelo
+Abre `Taller1_SEM_ECP2023.Rproj` o trabaja desde la raíz del repositorio. Requiere R
+con `lavaan`, `semTools`, `psych`, `knitr` y `writexl`. Los scripts comprueban los
+paquetes; no los instalan automáticamente. En una sesión de R puedes instalarlos
+una vez mediante:
 
-`02_estimacion_sem.R` requiere `lavaan`. Ya fue instalado en R 4.6.1 en la
-biblioteca de usuario de RStudio. Si se ejecuta desde otra sesión y no se
-encuentra el paquete, verificar `.libPaths()` antes de reinstalarlo. El script
-compara primero los modelos de medida por constructo y después estima el modelo
-estructural; guarda tablas en `salidas/`.
+```r
+install.packages(c("lavaan", "semTools", "psych", "knitr", "writexl"))
+```
 
-Para reproducir la comparación de medición, ejecutar `source("03_comparacion_medicion.R")`.
-La misma muestra completa se usa en las seis especificaciones. Ver la nota
-`04_comparacion_teorica_medicion.md` antes de interpretar o modificar el SEM.
-Para la comparación estructural exploratoria, ejecutar
-`source("04_sem_instituciones_dos_dimensiones.R")`. El reporte explica por qué
-la alternativa de dos dimensiones no sustituye el modelo de referencia.
-Para reproducir calidad y descriptivos, ejecutar
-`source("05_calidad_descriptivos.R")`; ver `05_resultados_calidad_descriptivos.md`
-para leer las decisiones y limitaciones.
-Para reproducir asociaciones y AFE, instalar `psych` y `GPArotation` si hacen
-falta (`install.packages(c("psych", "GPArotation"))`) y ejecutar
-`source("06_asociacion_afe.R")`. Ver `06_resultados_asociacion_afe.md` antes de
-interpretar el número de factores: el análisis paralelo sugiere cinco, mientras
-la solución de tres factores sirve como contraste de la hipótesis del taller.
-Para exportar las sintaxis del modelo de referencia y el rival, ejecutar
-`source("07_especificacion_modelo.R")`; consultar `07_especificacion_modelo.md`
-para el marco teórico, las matrices, la identificación y la equivalencia posible
-entre las dos direcciones estructurales.
+Ejecuta:
 
-## Taller 2: ponderación y Fase 2/3
+```r
+source("00_ejecutar_taller2.R", encoding = "UTF-8")
+```
 
-Los ZIP de `datos_crudos/` incluyen ahora `Caracteriasticas generales 2.zip` y
-`Tabla de viviendas.zip`. Esta última contiene `FEX_P`, el factor de expansión
-documentado por el DANE, enlazable a las personas por `DIRECTORIO`.
-Para Taller 2, ejecutar desde la carpeta del proyecto y en este orden:
+O desde una consola:
 
-Estos scripts leen los ZIP crudos: la base integrada del Taller 1 no trae
-`FEX_P`, por eso el factor se enlaza desde Tabla de viviendas usando
-`DIRECTORIO`.
+```text
+Rscript 00_ejecutar_taller2.R
+```
 
-1. `source("00_preparacion.R")`: integra los cinco módulos, enlaza `FEX_P`
-   desde Tabla de viviendas por `DIRECTORIO` y recodifica los 25 indicadores.
-2. `source("01_afc.R")`: estima el AFC ponderado y genera medición,
-   confiabilidad, AVE, HTMT y Fornell--Larcker.
-3. `source("02_estructural.R")`: estima SEM de referencia y rival, y produce
-   hipótesis y sensibilidades de pesos, faltantes y efecto aproximado de diseño.
-4. `source("03_multigrupo.R")`: estima invariancia ordinal por sexo y Wald con
-   ajustes Bonferroni y Holm.
-5. `source("04_exportar_resultados.R")`: genera `outputs/Taller2_SEM_resultados.xlsx`.
+El ejecutor regenera los insumos desde los ZIP, sin requerir CSV o tablas de una
+sesión anterior. Ejecuta, en este orden:
 
-Los scripts requieren `lavaan`, `semTools` y `writexl` según corresponda;
-comprueban los paquetes y no los instalan automáticamente. El script histórico
-`08_fase2_sem.R` se conserva para cotejar las salidas anteriores. Ver
-`08_hallazgos_muestreo_efectos.md` para los hallazgos confirmados y
-la limitación de que los microdatos anonimizados no publican identificadores
-del estrato ni del conglomerado muestral. El DANE no ofrece esos identificadores
-ni un cálculo alternativo de varianzas para este análisis; por ello las
-inferencias se reportan como exploratorias y sin ajuste completo del diseño.
-La síntesis lista para desarrollar el manuscrito está en
-`09_base_redaccion_articulo.md`. El libro y el ZIP final están versionados;
-ninguno contiene microdatos. Los scripts usan rutas relativas al proyecto y
-semilla fija `2026`; la biblioteca
-de paquetes opcional se agrega solo si existe bajo el perfil del sistema.
+1. `00_diagnosticos_articulo.R`: calidad y descriptivos de Fase 1 mediante
+   `05_calidad_descriptivos.R`, matriz policórica descriptiva y preparación.
+2. `01_afc.R`: AFC ponderado, ajuste, cargas con incertidumbre estandarizada,
+   confiabilidad, AVE, Fornell–Larcker, HTMT no ponderado y residuos.
+3. `02_estructural.R`: SEM principal y rival, tamaños de efecto, sensibilidades a
+   pesos/faltantes y escenario hipotético de errores. Incluye
+   `02_sensibilidades_medicion.R`: modelo sin los dos ítems no aplicables en Bogotá
+   y revisión exploratoria de dependencia local en dos particiones internas.
+4. `03_multigrupo.R`: secuencia ordinal por sexo, comparación conjunta de rutas y
+   Wald por ruta con ajustes Holm y Bonferroni.
+5. `04_exportar_resultados.R`: Excel y tablas LaTeX; llama a
+   `04_diagrama_articulo.R` para regenerar la figura vectorial desde las salidas y
+   a `04_fuentes_tablas.R` para las notas de fuente según la plantilla.
+
+Para regenerar únicamente las tablas, el libro y la figura usando salidas ya
+calculadas y verificadas, utiliza `Rscript 00_ejecutar_taller2.R --solo-exportar`.
+
+Se fijan semillas reproducibles y se guardan las versiones de R y paquetes en
+`salidas/*sessionInfo*.txt`. La estimación de modelos puede tardar varios minutos.
+Los CSV por persona que genera el diagnóstico de Fase 1 son exclusivamente locales,
+están excluidos de Git y no se añaden al paquete público.
+
+## Formato de entrega USTA
+
+El manuscrito usa la plantilla suministrada por el docente: 11 puntos, papel carta,
+márgenes de 2,5 cm, interlineado de uno y medio, autores y afiliación con `authblk`,
+resúmenes sin fórmulas, enlaces azules y referencias autor–año. La copia original
+se conserva en `documentacion/Plantilla_Articulo_USTA.tex`; sus ejemplos y textos
+de guía no forman parte del artículo. Las fuentes bajo tablas y figura siguen
+el formato de la plantilla.
+
+## Compilación y paquete
+
+Requiere una distribución LaTeX con `pdflatex` y `bibtex`, por ejemplo TinyTeX.
+Además de los paquetes básicos de la plantilla, una instalación mínima puede
+necesitar `microtype`, `enumitem`, `preprint` (incluye `authblk`), `setspace`, `pgf`
+y `xurl`. Se instalan normalmente con:
+
+```text
+tlmgr install microtype enumitem preprint setspace pgf xurl
+```
+
+En este equipo se descargaron a `tmp/plantilla/texmf/` sin
+modificar la instalación del sistema; `reproducir.ps1` utiliza esa copia local si
+existe. Las distribuciones completas de TeX Live y Overleaf suelen incluirlos.
+
+Desde `articulo/`, con esos paquetes disponibles, ejecuta:
+
+```text
+pdflatex -interaction=nonstopmode -halt-on-error articulo.tex
+bibtex articulo
+pdflatex -interaction=nonstopmode -halt-on-error articulo.tex
+pdflatex -interaction=nonstopmode -halt-on-error articulo.tex
+```
+
+En Windows, `./reproducir.ps1` ejecuta el análisis y compila el artículo.
+`./reproducir.ps1 -SoloArticulo` recompila utilizando las tablas ya generadas.
+Después de verificar los resultados con `python verificar_resultados.py`,
+`python empaquetar.py` actualiza el ZIP
+mediante una lista explícita de archivos agregados y comprueba su integridad.
+Estos comandos no realizan commits ni push.
+
+## Alcance de las conclusiones
+
+- WLSMV incorpora `FEX_P`. Faltan identificadores de estratificación y
+  UPM/conglomerados en los archivos utilizados; los errores estándar y pruebas no
+  representan un ajuste completo del diseño. `DIRECTORIO` y `REGION` no sustituyen
+  esas variables.
+- El ajuste robusto del modelo principal es débil: CFI 0,900 y RMSEA 0,092,
+  aunque los índices escalados son más favorables. Las asociaciones son pequeñas
+  y el R² es aproximadamente 0,016.
+- La diferencia institucional por sexo no conserva significación en las pruebas
+  específicas ajustadas por Holm y Bonferroni (p=0,067). La prueba conjunta
+  (p=0,017) es un contraste distinto y no localiza por sí sola una ruta particular.
+- La revisión residual es exploratoria. La pareja de ítems se identificó antes
+  con información de la base completa; la partición posterior evalúa estabilidad
+  interna y no constituye validación independiente.
+- El escenario que infla errores con un multiplicador basado en Kish es hipotético,
+  puede duplicar variabilidad ya incorporada y no estima el efecto de diseño del SEM.
+- HTMT y los descriptivos de Fase 1 se identifican explícitamente como no ponderados.
+  Las matrices muestrales ponderadas utilizadas por el AFC se exportan por separado.
+- Familiaridad declarada no equivale a conocimiento factual, uso o participación.
+  Los datos transversales no identifican efectos causales.
+
+## Materiales de Fase 1
+
+El script `Taller1_SEM_reproducible.R`, el reporte en `output/pdf/`, los scripts
+exploratorios anteriores y las notas numeradas se conservan como antecedentes del
+Taller 1. No son el punto de entrada del artículo vigente. Las notas históricas
+pueden describir decisiones y salidas previas; prevalecen el artículo actualizado,
+`REVISION_PUBLICACION.md` y el ejecutor canónico del Taller 2.

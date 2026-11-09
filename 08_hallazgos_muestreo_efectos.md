@@ -1,3 +1,5 @@
+> Nota histórica de preparación. La revisión vigente está en `REVISION_PUBLICACION.md` y `articulo/articulo.pdf`. Las diferencias por ruta ajustadas por Holm/Bonferroni no conservan significación (p=0,067); no deben usarse las conclusiones previas como versión final.
+
 # Taller 2: hallazgos iniciales sobre ponderación, muestra y plan de análisis
 
 ## Qué se confirmó en los archivos oficiales
